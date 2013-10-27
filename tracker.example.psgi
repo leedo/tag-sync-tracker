@@ -2,10 +2,10 @@ use Plack::Builder;
 use TagSync::Tracker::API;
 use TagSync::Tracker::FrontEnd;
 use TagSync::DB;
-use TagSync::Auth;
+use TagSync::Auth::PunBB;
 
 my $db = TagSync::DB->new("dbi:SQLite:dbname=tracker.db");
-my $auth = TagSync::Auth->new(
+my $auth = TagSync::Auth::PunBB->new(
   TagSync::DB->new("dbi:mysql:dbname=punbb", "punbb", "punbb")
 );
 
