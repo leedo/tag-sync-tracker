@@ -27,7 +27,7 @@
       <td>
         <ul class="tag-list">
         <: for $server.users -> $user { :>
-          <li><: $user.username :></li>
+          <li><a href="/tracker/user/<: $user.id :>"><: $user.username :></a></li>
         <: } :>
         </ul>
       </td>
