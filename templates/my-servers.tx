@@ -1,0 +1,123 @@
+: cascade common
+: override id -> { "my-servers" }
+: override body -> {
+<h2>Register a new server</h2>
+<form action="/api/my/servers" method="POST" class="api-form" data-partial="my-servers">
+  <div class="field">
+    <div class="field-label">
+      <label for="name">Name</label>
+    </div>
+    <div class="field-value">
+      <input type="text" name="name" id="name"> 
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">
+      <label for="url">URL</label>
+    </div>
+    <div class="field-value">
+      <input type="text" name="url" id="url">
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-value">
+      <input type="submit" value="Register">
+      <span class="status"></span>
+    </div>
+  </div>
+</form>
+
+: if $servers.size() > 0 {
+<h2>My Servers</h2>
+<table class="table-list" id="my-server-list" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Info</th>
+      <th>Mirror tags</th>
+      <th>Mirror users</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+: for $servers -> $server {
+    <tr>
+      <td><: $server.name :></td>
+
+      <td>
+        <table cellspacing="0" class="server-info">
+          <tr>
+            <td>ID</td>
+            <td><span class="token"><: $server.id :></span></td>
+          </tr>
+          <tr>
+            <td>URL</td>
+            <td><a href="<: $server.url :>"><: $server.url :></a></td>
+          </tr>
+          <tr>
+            <td>Token</td>
+            <td><span class="token"><: $server.token :></span></td>
+          </tr>
+        </table>
+      </td>
+
+      <td class="server-tags">
+        <form method="POST" action="/api/my/tags" class="api-form" data-partial="my-server-list">
+          <input type="hidden" name="server_request" value="<: $server.id :>">
+          <input type="text" name="tag">
+          <input type="submit" value="Add">
+        </form>
+        <ul class="tag-list">
+        <: for $server.tags -> $tag { :>
+          <li>
+            <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
+            <form method="DELETE" action="/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="my-server-list">
+              <input type="hidden" name="server_request" value="<: $server.id :>">
+              <input type="submit" value="x">
+            </form>
+          </li>
+        <: } :>
+        </ul>
+      </td>
+
+      <td class="server-users">
+        <form method="POST" action="/api/my/users" class="api-form" data-partial="my-server-list">
+          <input type="hidden" name="server_request" value="<: $server.id :>">
+          <input type="text" name="user">
+          <input type="submit" value="Add">
+        </form>
+        <ul class="tag-list">
+        <: for $server.users -> $user { :>
+          <li>
+            <: $user.username :>
+            <form method="DELETE" action="/api/my/user/<: $user.id :>" class="api-form" data-partial="my-server-list">
+              <input type="hidden" name="server_request" value="<: $server.id :>">
+              <input type="submit" value="x">
+            </form>
+          </li>
+        <: } :>
+        </ul>
+      </td>
+
+      <td>
+        <span class="status server-status down" data-status-url="<: $server.url :>/ping"></span>
+      </td>
+
+      <td class="actions">
+        <form method="DELETE" action="/api/my/server/<: $server.id :>" class="api-form confirm" data-partial="my-server-list">
+          <input type="submit" value="Delete">
+        </form>
+
+        <form method="DELETE" action="/api/my/server/<: $server.id :>/token" class="api-form confirm" data-partial="my-server-list">
+          <input type="submit" value="New token">
+        </form>
+      </td>
+    </tr>
+: }
+  </tbody>
+</table>
+: }
+: }

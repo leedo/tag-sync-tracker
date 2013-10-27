@@ -1,0 +1,38 @@
+: cascade common
+: override body -> {
+<h2>All Servers</h2>
+<table class="table-list" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Admin</th>
+      <th>Status</th>  
+      <th>Mirroring tags</th>
+      <th>Mirroring users</th>
+    </tr>
+  </thead>
+  <tbody>
+: for $servers -> $server {
+    <tr>
+      <td><: $server.name :></td>
+      <td><: $server.admin.username :></td>
+      <td><span class="status server-status down" data-status-url="<: $server.url :>/ping"></span></td>
+      <td>
+        <ul class="tag-list">
+        <: for $server.tags -> $tag { :>
+          <li><a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a></li>
+        <: } :>
+        </ul>
+      </td>
+      <td>
+        <ul class="tag-list">
+        <: for $server.users -> $user { :>
+          <li><: $user.username :></li>
+        <: } :>
+        </ul>
+      </td>
+    </tr>
+: }
+  </tbody>
+</table>
+: }

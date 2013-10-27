@@ -1,0 +1,109 @@
+: cascade common
+: override id -> { "upload" }
+: override body -> {
+<h2><: $upload.artist :> - <: $upload.title :></h2>
+
+<div>
+
+<div class="field">
+  <div class="field-label">
+    Artist
+  </div>
+  <div class="field-value">
+    <: $upload.artist :>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Album
+  </div>
+  <div class="field-value">
+    <: $upload.title :>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Filename
+  </div>
+  <div class="field-value">
+    <: $upload.filename :>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Uploaded by
+  </div>
+  <div class="field-value">
+    <ul class="tag-list">
+      <li><a href="/tracker/user/<: $upload.user.id :>"><: $upload.user.username :></a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Tags
+  </div>
+  <div class="field-value upload-tags">
+    <ul class="tag-list">
+    <: for $upload.tags -> $tag { :>
+      <li>
+        <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
+        <form method="DELETE" action="/api/upload/<: $upload.id :>/tag/<: $tag.slug :>" class="api-form" data-partial="upload">
+          <input type="submit" value="x">
+        </form>
+
+      </li>
+    <: } :>
+      <form method="POST" action="/api/upload/<: $upload.id :>/tags" class="api-form" data-partial="upload">
+        <input type="text" name="tag">
+        <input type="submit" value="Add">
+      </form>
+    </ul>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Quality
+  </div>
+  <div class="field-value">
+    <: $upload.quality :>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Size
+  </div>
+  <div class="field-value">
+    <: $upload.size :>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Upload date
+  </div>
+  <div class="field-value">
+    <span class="timestamp"><: $upload.upload_date :></span>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Info
+  </div>
+  <div class="field-value">
+    <: $upload.info :>
+  </div>
+</div>
+
+<h3>Servers that should have this file</h3>
+<div class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></div>
+
+</div>
+: }

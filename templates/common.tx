@@ -1,0 +1,10 @@
+: if (!$partial) {
+: include "header.tx"
+: include "nav.tx"
+: }
+<div id="<: block id -> { } :>">
+: block body -> { }
+</div>
+: if (!$partial) {
+: include "footer.tx"
+: }

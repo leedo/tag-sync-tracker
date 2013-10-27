@@ -1,0 +1,41 @@
+: cascade common
+: override id -> { "uploads" }
+: override body -> {
+<h2><: $title :></h2>
+<table id="uploads" class="table-list" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Artist</th>
+      <th>Album</th>
+      <th>Quality</th>
+      <th>Tags</th>
+      <th>User</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+: for $uploads -> $upload {
+    <tr>
+      <td><: $upload.artist :></td>
+      <td><: $upload.title :></td>
+      <td><: $upload.quality :> (<: $upload.size :> bytes)</td>
+      <td>
+        <ul class="tag-list">
+        <: for $upload.tags -> $tag { :>
+          <li><a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a></li>
+        <: } :>
+        </ul>
+      </td>
+      <td>
+        <ul class="tag-list">
+          <li><a href="/tracker/user/<: $upload.user.id :>"><: $upload.user.username :></a></li>
+        </ul>
+      </td>
+      <td><span class="timestamp"><: $upload.upload_date :></span></td>
+      <td><a href="/tracker/upload/<: $upload.id :>">Info</a></td>
+    </tr>
+: }
+  </tbody>
+</table>
+: }

@@ -1,0 +1,8 @@
+tracker.db
+t/tracker/tracker.db
+data
+docs/*.html
+.carton
+local
+server.psgi
+tracker.psgi

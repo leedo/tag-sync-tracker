@@ -1,0 +1,51 @@
+: cascade common
+: override body -> {
+<h2>Upload</h2>
+
+<form id="new-upload" method="post" action="/api/upload/url" enctype="multipart/form-data">
+<input id="token" type="hidden" name="token" value="">
+<input id="return" type="hidden" name="return" value="/upload">
+
+<div class="field">
+  <div class="field-label">
+    <label for="file">Upload</label>
+  </div>
+  <div class="field-value">
+    <input type="file" name="file" id="file">
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    <label for="tags">Tags</label>
+  </div>
+  <div class="field-value">
+    <input type="text" name="tags" id="tags">
+    <p class="field-note">(comma separated)</p>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    <label for="server">Server</label>
+  </div>
+  <div class="field-value">
+    <select name="server" id="server" disabled="disabled">
+      <option>Must fill in tags</option>
+    </select>
+    <button id="server-refresh">Refresh</button>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-value">
+    <input id="upload-submit" type="submit" value="Upload to selected server">
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+      <button class="progress-abort">Abort</button>
+    </div>
+    <span class="status"></span>
+  </div>
+</div>
+</form>
+: }
