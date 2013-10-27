@@ -2,7 +2,7 @@ package TagSync::Tracker::API;
 
 use parent "Plack::Component";
 
-use Plack::Util::Accessor qw{db auth url};
+use Plack::Util::Accessor qw{db auth};
 use TagSync::Web;
 use TagSync::Tracker::Request;
 use Digest::SHA1 qw{sha1_hex};

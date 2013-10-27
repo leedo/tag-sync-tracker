@@ -19,6 +19,5 @@ builder {
   mount "/tracker" => TagSync::Tracker::FrontEnd->new(
     db => $db,
     auth => $auth,
-    url => "http://localhost:5000",
   )->to_app;
 }
