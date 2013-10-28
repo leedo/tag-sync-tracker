@@ -26,7 +26,7 @@ sub prepare_req {
 sub template {
   my $self = shift;
   $self->{template} ||= do {
-    Text::Xslate->new(path => ["templates"]);
+    Text::Xslate->new(path => ["share/templates"]);
   };
 }
 
