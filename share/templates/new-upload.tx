@@ -2,7 +2,7 @@
 : override body -> {
 <h2>Upload</h2>
 
-<form id="new-upload" method="post" action="/api/upload/url" enctype="multipart/form-data">
+<form id="new-upload" method="post" action="/tracker/api/upload/url" enctype="multipart/form-data">
 <input id="token" type="hidden" name="token" value="">
 <input id="return" type="hidden" name="return" value="/upload">
 

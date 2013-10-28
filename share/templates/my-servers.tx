@@ -2,7 +2,7 @@
 : override id -> { "my-servers" }
 : override body -> {
 <h2>Register a new server</h2>
-<form action="/api/my/servers" method="POST" class="api-form" data-partial="my-servers">
+<form action="/tracker/api/my/servers" method="POST" class="api-form" data-partial="my-servers">
   <div class="field">
     <div class="field-label">
       <label for="name">Name</label>
@@ -65,7 +65,7 @@
       </td>
 
       <td class="server-tags">
-        <form method="POST" action="/api/my/tags" class="api-form" data-partial="server-<: $server.id :>-tags">
+        <form method="POST" action="/tracker/api/my/tags" class="api-form" data-partial="server-<: $server.id :>-tags">
           <input type="hidden" name="server_request" value="<: $server.id :>">
           <input type="text" name="tag">
           <input type="submit" value="Add">
@@ -74,7 +74,7 @@
         <: for $server.tags -> $tag { :>
           <li>
             <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
-            <form method="DELETE" action="/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="server-<: $server.id :>-tags">
+            <form method="DELETE" action="/tracker/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="server-<: $server.id :>-tags">
               <input type="hidden" name="server_request" value="<: $server.id :>">
               <input type="submit" value="x">
             </form>
@@ -84,7 +84,7 @@
       </td>
 
       <td class="server-users">
-        <form method="POST" action="/api/my/users" class="api-form" data-partial="server-<: $server.id :>-users">
+        <form method="POST" action="/tracker/api/my/users" class="api-form" data-partial="server-<: $server.id :>-users">
           <input type="hidden" name="server_request" value="<: $server.id :>">
           <input type="text" name="user">
           <input type="submit" value="Add">
@@ -93,7 +93,7 @@
         <: for $server.users -> $user { :>
           <li>
             <: $user.username :>
-            <form method="DELETE" action="/api/my/user/<: $user.id :>" class="api-form" data-partial="server-<: $server.id :>-users">
+            <form method="DELETE" action="/tracker/api/my/user/<: $user.id :>" class="api-form" data-partial="server-<: $server.id :>-users">
               <input type="hidden" name="server_request" value="<: $server.id :>">
               <input type="submit" value="x">
             </form>
@@ -107,11 +107,11 @@
       </td>
 
       <td class="actions">
-        <form method="DELETE" action="/api/my/server/<: $server.id :>" class="api-form confirm" data-partial="my-server-list">
+        <form method="DELETE" action="/tracker/api/my/server/<: $server.id :>" class="api-form confirm" data-partial="my-server-list">
           <input type="submit" value="Delete">
         </form>
 
-        <form method="DELETE" action="/api/my/server/<: $server.id :>/token" class="api-form confirm" data-partial="server-<: $server.id :>-token">
+        <form method="DELETE" action="/tracker/api/my/server/<: $server.id :>/token" class="api-form confirm" data-partial="server-<: $server.id :>-token">
           <input type="submit" value="New token">
         </form>
       </td>

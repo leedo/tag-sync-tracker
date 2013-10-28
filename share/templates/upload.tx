@@ -52,13 +52,13 @@
     <: for $upload.tags -> $tag { :>
       <li>
         <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
-        <form method="DELETE" action="/api/upload/<: $upload.id :>/tag/<: $tag.slug :>" class="api-form" data-partial="upload-<: $upload.id :>-tags">
+        <form method="DELETE" action="/tracker/api/upload/<: $upload.id :>/tag/<: $tag.slug :>" class="api-form" data-partial="upload-<: $upload.id :>-tags">
           <input type="submit" value="x">
         </form>
 
       </li>
     <: } :>
-      <form method="POST" action="/api/upload/<: $upload.id :>/tags" class="api-form" data-partial="upload-<: $upload.id :>-tags">
+      <form method="POST" action="/tracker/api/upload/<: $upload.id :>/tags" class="api-form" data-partial="upload-<: $upload.id :>-tags">
         <input type="text" name="tag">
         <input type="submit" value="Add">
       </form>

@@ -49,7 +49,7 @@ $(document).ready(function() {
     $.ajax({
       type: 'GET',
       dataType: "json",
-      url: '/api/my/upload/servers',
+      url: '/tracker/api/my/upload/servers',
       data: { tags: $('#tags').val().split(",") },
       success: function(res) {
         if (res['error']) {
@@ -172,7 +172,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "GET",
-      url: "/api/upload/" + id + "/servers",
+      url: "/tracker/api/upload/" + id + "/servers",
       dataType: "json",
       success: function(res) {
         $(res.servers).each(function(i, server) {

@@ -2,7 +2,7 @@
 : override body -> {
 <h2>Album info</h2>
 
-<form action="/api/upload" method="post" class="api-form">
+<form action="/tracker/api/upload" method="post" class="api-form">
 <div class="field">
   <div class="field-label"><label>Filename</label></div>
   <div class="field-value">
