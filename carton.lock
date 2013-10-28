@@ -2590,19 +2590,22 @@
                "version" : "1.13"
             },
             "Mouse::Exporter" : {
-               "file" : "lib/Mouse/Exporter.pm"
+               "file" : "lib/Mouse/Tiny.pm",
+               "version" : "1.13"
             },
             "Mouse::Meta::Attribute" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Tiny.pm",
+               "version" : "1.13"
             },
             "Mouse::Meta::Class" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Meta/Class.pm"
             },
             "Mouse::Meta::Method" : {
                "file" : "lib/Mouse/Meta/Method.pm"
             },
             "Mouse::Meta::Method::Accessor" : {
-               "file" : "lib/Mouse/Meta/Method/Accessor.pm"
+               "file" : "lib/Mouse/Tiny.pm",
+               "version" : "1.13"
             },
             "Mouse::Meta::Method::Constructor" : {
                "file" : "lib/Mouse/Meta/Method/Constructor.pm"
@@ -2611,36 +2614,38 @@
                "file" : "lib/Mouse/Meta/Method/Delegation.pm"
             },
             "Mouse::Meta::Method::Destructor" : {
-               "file" : "lib/Mouse/Tiny.pm",
-               "version" : "1.13"
+               "file" : "lib/Mouse/Meta/Method/Destructor.pm"
             },
             "Mouse::Meta::Module" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Meta/Module.pm"
             },
             "Mouse::Meta::Role" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Meta/Role.pm"
             },
             "Mouse::Meta::Role::Application" : {
+               "file" : "lib/Mouse/Meta/Role/Application.pm"
+            },
+            "Mouse::Meta::Role::Application::RoleSummation" : {
                "file" : "lib/Mouse/Tiny.pm",
                "version" : "1.13"
             },
-            "Mouse::Meta::Role::Application::RoleSummation" : {
-               "file" : "lib/Mouse/Meta/Role/Composite.pm"
-            },
             "Mouse::Meta::Role::Composite" : {
-               "file" : "lib/Mouse/Meta/Role/Composite.pm"
+               "file" : "lib/Mouse/Tiny.pm",
+               "version" : "1.13"
             },
             "Mouse::Meta::Role::Method" : {
                "file" : "lib/Mouse/Meta/Role/Method.pm"
             },
             "Mouse::Meta::TypeConstraint" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Meta/TypeConstraint.pm"
             },
             "Mouse::Object" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Tiny.pm",
+               "version" : "1.13"
             },
             "Mouse::PurePerl" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Tiny.pm",
+               "version" : "1.13"
             },
             "Mouse::Role" : {
                "file" : "lib/Mouse/Role.pm",
@@ -2658,14 +2663,14 @@
                "file" : "lib/Mouse/TypeRegistry.pm"
             },
             "Mouse::Util" : {
-               "file" : "lib/Mouse/Util.pm",
+               "file" : "lib/Mouse/Tiny.pm",
                "version" : "1.13"
             },
             "Mouse::Util::MetaRole" : {
                "file" : "lib/Mouse/Util/MetaRole.pm"
             },
             "Mouse::Util::TypeConstraints" : {
-               "file" : "lib/Mouse/PurePerl.pm"
+               "file" : "lib/Mouse/Util/TypeConstraints.pm"
             },
             "Squirrel" : {
                "file" : "lib/Squirrel.pm"
@@ -3467,7 +3472,7 @@
                "file" : "lib/Test/Deep/RefType.pm"
             },
             "Test::Deep::Regexp" : {
-               "file" : "lib/Test/Deep/RegexpOnly.pm"
+               "file" : "lib/Test/Deep/Regexp.pm"
             },
             "Test::Deep::RegexpMatches" : {
                "file" : "lib/Test/Deep/RegexpMatches.pm"
@@ -4072,8 +4077,7 @@
          "pathname" : "G/GF/GFUJI/Text-Xslate-3.0.0.tar.gz",
          "provides" : {
             "Text::Xslate" : {
-               "file" : "lib/Text/Xslate.pm",
-               "version" : "3.0"
+               "file" : "lib/Text/Xslate/Compiler.pm"
             },
             "Text::Xslate::Bridge" : {
                "file" : "lib/Text/Xslate/Bridge.pm"
@@ -4143,7 +4147,7 @@
             }
          },
          "target" : "Text::Xslate",
-         "version" : "3.0"
+         "version" : "3.0.0"
       },
       "Try::Tiny" : {
          "dist" : "Try-Tiny-0.18",

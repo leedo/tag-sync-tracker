@@ -194,3 +194,24 @@ span.token {
   top: -2px;
   margin: 0;
 }
+ul.file-downloads {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+}
+ul.file-downloads li {
+  border-bottom: 1px solid #fff;
+}
+ul.file-downloads li a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  padding: 5px;
+}
+ul.file-downloads a.up {
+  background: #EBFEE5;
+}
+ul.file-downloads a.down {
+  background: #FFEEEA;
+}

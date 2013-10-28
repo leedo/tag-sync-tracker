@@ -48,17 +48,17 @@
     Tags
   </div>
   <div class="field-value upload-tags">
-    <ul class="tag-list">
+    <ul class="tag-list" id="upload-<: $upload.id :>-tags">
     <: for $upload.tags -> $tag { :>
       <li>
         <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
-        <form method="DELETE" action="/api/upload/<: $upload.id :>/tag/<: $tag.slug :>" class="api-form" data-partial="upload">
+        <form method="DELETE" action="/api/upload/<: $upload.id :>/tag/<: $tag.slug :>" class="api-form" data-partial="upload-<: $upload.id :>-tags">
           <input type="submit" value="x">
         </form>
 
       </li>
     <: } :>
-      <form method="POST" action="/api/upload/<: $upload.id :>/tags" class="api-form" data-partial="upload">
+      <form method="POST" action="/api/upload/<: $upload.id :>/tags" class="api-form" data-partial="upload-<: $upload.id :>-tags">
         <input type="text" name="tag">
         <input type="submit" value="Add">
       </form>
@@ -103,7 +103,7 @@
 </div>
 
 <h3>Servers that should have this file</h3>
-<div class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></div>
+<ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></ul>
 
 </div>
 : }

@@ -1,8 +1,8 @@
-package TagSync::Server::Sync;
+package TagSync::Server;
 
 use parent 'Plack::Component';
 
-use Plack::Util::Accessor qw{id token data_root};
+use Plack::Util::Accessor qw{id token data_root tracker};
 use Plack::Request;
 use TagSync::Web;
 use Digest::HMAC_SHA1 qw{hmac_sha1_hex};

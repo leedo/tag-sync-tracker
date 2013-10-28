@@ -59,22 +59,22 @@
           </tr>
           <tr>
             <td>Token</td>
-            <td><span class="token"><: $server.token :></span></td>
+            <td><span class="token" id="server-<: $server.id :>-token"><: $server.token :></span></td>
           </tr>
         </table>
       </td>
 
       <td class="server-tags">
-        <form method="POST" action="/api/my/tags" class="api-form" data-partial="my-server-list">
+        <form method="POST" action="/api/my/tags" class="api-form" data-partial="server-<: $server.id :>-tags">
           <input type="hidden" name="server_request" value="<: $server.id :>">
           <input type="text" name="tag">
           <input type="submit" value="Add">
         </form>
-        <ul class="tag-list">
+        <ul class="tag-list" id="server-<: $server.id :>-tags">
         <: for $server.tags -> $tag { :>
           <li>
             <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
-            <form method="DELETE" action="/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="my-server-list">
+            <form method="DELETE" action="/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="server-<: $server.id :>-tags">
               <input type="hidden" name="server_request" value="<: $server.id :>">
               <input type="submit" value="x">
             </form>
@@ -84,16 +84,16 @@
       </td>
 
       <td class="server-users">
-        <form method="POST" action="/api/my/users" class="api-form" data-partial="my-server-list">
+        <form method="POST" action="/api/my/users" class="api-form" data-partial="server-<: $server.id :>-users">
           <input type="hidden" name="server_request" value="<: $server.id :>">
           <input type="text" name="user">
           <input type="submit" value="Add">
         </form>
-        <ul class="tag-list">
+        <ul class="tag-list" id="server-<: $server.id :>-users">
         <: for $server.users -> $user { :>
           <li>
             <: $user.username :>
-            <form method="DELETE" action="/api/my/user/<: $user.id :>" class="api-form" data-partial="my-server-list">
+            <form method="DELETE" action="/api/my/user/<: $user.id :>" class="api-form" data-partial="server-<: $server.id :>-users">
               <input type="hidden" name="server_request" value="<: $server.id :>">
               <input type="submit" value="x">
             </form>
@@ -111,7 +111,7 @@
           <input type="submit" value="Delete">
         </form>
 
-        <form method="DELETE" action="/api/my/server/<: $server.id :>/token" class="api-form confirm" data-partial="my-server-list">
+        <form method="DELETE" action="/api/my/server/<: $server.id :>/token" class="api-form confirm" data-partial="server-<: $server.id :>-token">
           <input type="submit" value="New token">
         </form>
       </td>

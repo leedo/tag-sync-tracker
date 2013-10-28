@@ -176,20 +176,16 @@ $(document).ready(function() {
       dataType: "json",
       success: function(res) {
         $(res.servers).each(function(i, server) {
-          var li = $('<li/>');
-          var link = $('<a/>').html(server.name);
           var url = server.url + "/download/" + hash + "?token=" + server.token;
-          link.attr('href', url);
-          container.append(li.append(link));
+          var link = $('<a/>',{href: url}).html(server.name);
+          container.append($('<li/>').append(link));
           $.ajax({
             type: "GET",
             url: url + "/download/" + hash,
             data: {token: server.token, exists: true},
             dataType: "json",
             success: function(res) {
-              li.append($('<span/>', {
-                'class': ("status " + (res.success ? "up" : "down"))
-              }));
+              link.addClass(res.success ? "up" : "down");
             }
           });
         });
