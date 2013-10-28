@@ -4,5 +4,5 @@ data
 docs/*.html
 .carton
 local
-server.psgi
-tracker.psgi
+conf/server.json
+conf/tracker.pl

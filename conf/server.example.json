@@ -1,0 +1,6 @@
+{
+  "id": 1,
+  "token": "43631b0161729cefca55481125ce49db71677103",
+  "data_root": "./data",
+  "tracker": "http://localhost:5000"
+}

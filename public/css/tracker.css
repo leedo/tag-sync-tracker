@@ -198,7 +198,6 @@ ul.file-downloads {
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 300px;
 }
 ul.file-downloads li {
   border-bottom: 1px solid #fff;

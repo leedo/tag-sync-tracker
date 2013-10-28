@@ -230,7 +230,6 @@ get qr{/upload/([^/]+)/servers} => sub {
       size => $upload->{size},
       filename => $upload->{filename},
     }; 
-    warn $body;
 
     my $sign = sub {
       my $row = shift;
