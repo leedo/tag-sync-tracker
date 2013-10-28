@@ -1,22 +1,23 @@
 use Plack::Builder;
 use TagSync::Tracker::API;
 use TagSync::Tracker::FrontEnd;
+use TagSync::Auth::PunBB;
 use TagSync::DB;
 
-my $config = do {
-  my $file = $ENV{TT_CONFIG} || "conf/tracker.pl";
-  do $file;
-};
+my $db = TagSync::DB->new("dbi:SQLite:dbname=tracker.db");
+my $auth = TagSync::Auth::PunBB->new(
+  TagSync::DB->new("dbi:mysql:dbname=punbb", "punbb", "punbb")
+);
 
 builder {
   enable "Plack::Middleware::Static",
     path => sub {s!^/assets/!!}, root => "public";
   mount "/api" => TagSync::Tracker::API->new(
-    db   => $config->{db},
-    auth => $config->{auth},
+    db   => $db,
+    auth => $auth,
   )->to_app;
   mount "/tracker" => TagSync::Tracker::FrontEnd->new(
-    db   => $config->{db},
-    auth => $config->{auth},
+    db   => $db,
+    auth => $auth,
   )->to_app;
 }

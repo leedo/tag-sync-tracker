@@ -181,7 +181,7 @@ $(document).ready(function() {
           container.append($('<li/>').append(link));
           $.ajax({
             type: "GET",
-            url: url + "/download/" + hash,
+            url: server.url + "/download/" + hash,
             data: {token: server.token, exists: true},
             dataType: "json",
             success: function(res) {
