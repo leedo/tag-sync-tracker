@@ -51,7 +51,7 @@ get "/upload" => sub {
   my ($key) = $req->parameters->keys;
 
   # step 1
-  return $self->render('new-upload') unless $key;
+  return $self->render('upload-begin') unless $key;
 
   # step 2
   my $data = decode_json decode_base64 uri_unescape $key;
