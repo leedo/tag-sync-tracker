@@ -20,6 +20,7 @@ CREATE TABLE tag (
 CREATE TABLE upload_tag (
   upload_id INTEGER NOT NULL,
   tag_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
   PRIMARY KEY (upload_id, tag_id)
 );
 

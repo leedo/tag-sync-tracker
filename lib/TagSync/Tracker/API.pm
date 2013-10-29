@@ -68,11 +68,11 @@ post qr{/upload/(\d+)/tags} => sub {
     }, undef, $tag);
 
     $_->do(q{
-      INSERT OR IGNORE INTO upload_tag (upload_id, tag_id)
-        SELECT ?,id
+      INSERT OR IGNORE INTO upload_tag (upload_id, tag_id, user_id)
+        SELECT ?,id,?
         FROM tag
         WHERE slug = ?
-    }, undef, $upload_id, $tag);
+    }, undef, $upload_id, $req->id, $tag);
   });
 
   api_response_ok;
@@ -92,7 +92,8 @@ del qr{/upload/(\d+)/tag/([^/]+)} => sub {
       DELETE FROM upload_tag
       WHERE upload_id = ?
         AND tag_id = ?
-    }, undef, $upload_id, $tag_id);
+        AND user_id = ?
+    }, undef, $upload_id, $tag_id, $req->id);
   });
 
   api_response_ok;

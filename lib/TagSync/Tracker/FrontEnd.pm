@@ -112,7 +112,7 @@ get qr{/upload/(\d+)} => sub {
 
   my $upload = $self->db->run(sub {
     my $tags = $_->prepare(q{
-      SELECT t.slug, t.id
+      SELECT t.slug, t.id, ut.user_id
         FROM upload_tag AS ut
         INNER JOIN tag AS t
           ON t.id = ut.tag_id
@@ -127,7 +127,7 @@ get qr{/upload/(\d+)} => sub {
     $upload;
   });
 
-  $self->render('upload', {upload => $upload});
+  $self->render('upload', {upload => $upload, user_id => $req->id});
 };
 
 get "/uploads" => sub {
@@ -136,7 +136,7 @@ get "/uploads" => sub {
 
   $self->db->run(sub {
     my $tags = $_->prepare(q{
-      SELECT t.slug, t.id
+      SELECT t.slug, t.id, t.user_id
         FROM upload_tag AS ut
         INNER JOIN tag AS t
           ON t.id = ut.tag_id
@@ -268,7 +268,7 @@ get "/my-subscriptions" => sub {
   my @users, @tags;
   $self->db->run(sub {
     my $tags = $_->prepare(q{
-      SELECT t.*
+      SELECT t.id, t.slug
       FROM tag_subscription AS ts
       INNER JOIN tag AS t
         ON t.id = ts.tag_id
