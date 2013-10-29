@@ -1,46 +1,68 @@
+var tracker = {};
+
+tracker.update_partial = function(id) {
+  $.ajax({
+    type: "GET",
+    url: window.location.toString(),
+    dataType: "html",
+    success: function(html) {
+      var container = $('<div/>').html(html).hide();
+      var replacement = container.find('#' + id).remove();
+      $('#' + id).replaceWith(replacement);
+      container.remove();
+    }
+  });
+};
+
+tracker.form_data = function(form) {
+  var data = {};
+  $.each(form.serializeArray(), function(i, input) {
+    if (input['name'] == "_method")
+      method = input['value']
+    else
+      data[input['name']] = input['value'];
+  });
+  return data;
+};
+
+tracker.form_api_request = function(form, success) {
+  if (form.hasClass("confirm") && !confirm("Are you sure?"))
+    return;
+
+  $.ajax({
+    url: form.attr('action'),
+    type: form.attr('method'),
+    data: tracker.form_data(form),
+    dataType: "json",
+    success: function(res) {
+      if (res.error) {
+        var status = form.find('.status');
+        if (status.length)
+          status.addClass('error').html(res.error);
+        else
+          alert(res.error);
+      }
+      else if (success) {
+        success(res);
+      }
+      else {
+        var partial = form.attr('data-partial')
+        if (partial)
+          tracker.update_partial(partial);
+      }
+    }
+  });
+};
+
 $(document).ready(function() {
   $('body').on('submit', 'form.api-form', function(e) {
     e.preventDefault();
-    var form = $(this);
-    if (form.hasClass("confirm") && !confirm("Are you sure?"))
-      return;
-    var data = {};
-    var method = form.attr('method');
-    $.each(form.serializeArray(), function(i, input) {
-      if (input['name'] == "_method")
-        method = input['value']
-      else
-        data[input['name']] = input['value'];
-    });
-    $.ajax({
-      type: method,
-      url: form.attr('action'),
-      data: data,
-      dataType: "json",
-      success: function(res) {
-        if (res.error) {
-          var status = form.find('.status');
-          if (status.length)
-            status.addClass('error').html(res.error);
-          else
-            alert(res.error);
-          return;
-        }
-        var partial = form.attr('data-partial')
-        if (partial) {
-          $.ajax({
-            type: "GET",
-            url: window.location.toString(),
-            dataType: "html",
-            success: function(html) {
-              var container = $('<div/>').html(html).hide();
-              var replacement = container.find('#' + partial).remove();
-              $('#' + partial).replaceWith(replacement);
-              container.remove();
-            }
-          });
-        }
-      }
+    tracker.form_api_request($(this));
+  });
+  $('#upload-complete').on('submit', function(e) {
+    e.preventDefault();
+    tracker.form_api_request($(this), function(res) {
+      window.location = "/tracker/upload/" + res.upload;
     });
   });
 
