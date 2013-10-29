@@ -1,14 +1,17 @@
 <ul id="nav">
-  <li<: if $page == "new-upload" { :> class="selected"<: }:>>
+  <li>
     <a href="/tracker/upload">New upload</a>
   </li>
-  <li<: if $page == "uploads" { :> class="selected"<: } :>>
+  <li>
     <a href="/tracker/uploads">Uploads</a>
   </li>
-  <li<: if $page == "servers" { :> class="selected"<: } :>>
+  <li>
     <a href="/tracker/servers">All servers</a>
   </li>
-  <li<: if $page == "my-servers" { :> class="selected"<: } :>>
+  <li>
     <a href="/tracker/my-servers">My servers</a>
+  </li>
+  <li>
+    <a href="/tracker/my-subscriptions">My tags and users</a>
   </li>
 </ul>
