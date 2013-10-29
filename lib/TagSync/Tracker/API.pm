@@ -210,8 +210,6 @@ get qr{/upload/([^/]+)/servers} => sub {
   });
 };
 
-## Account endpoints
-
 post '/my/servers' => sub {
   my ($self, $req) = @_;
   my $p = $req->parameters;
@@ -258,6 +256,54 @@ del qr{/my/server/(\d+)/token} => sub {
     }, undef, $token, $server_id, $req->id);
   });
   api_response { success => "ok", token => $token }; 
+};
+
+get '/my/upload/servers' => sub {
+  my ($self, $req) = @_;
+
+  my @tags = map {s/^\s+//; s/\s+$//; $_} $req->parameters->get_all('tags[]');
+  my $tag_placeholders = join ",", map {"?"} 0 .. $#tags;
+
+  my $query = qq{
+    SELECT s.id, s.name, s.token, s.url
+    FROM server AS s
+    WHERE
+      s.id IN (
+        SELECT us.subscriber_id
+        FROM user_subscription AS us
+        WHERE us.user_id = ?
+          AND us.type = "server"
+      )
+      OR
+      s.id IN (
+        SELECT ts.subscriber_id
+        FROM tag_subscription AS ts
+          INNER JOIN tag AS t
+            ON t.id = ts.tag_id
+        WHERE ts.type = "server"
+          AND t.slug IN ($tag_placeholders)
+      )
+  };
+
+  my $sth = $self->db->run(sub {
+    my $sth = $_->prepare($query);
+    $sth->execute($req->id, @tags);
+    $sth;
+  });
+
+  my @servers;
+  while (my $row = $sth->fetchrow_hashref) {
+    my $body  = encode_json {time => $time}; 
+    my $sig   = hmac_sha1_hex $body, $row->{token};
+    my $token = encode_base64 join ":", $sig, $body;
+    push @servers, {
+      id    => $row->{id},
+      name  => $row->{name},
+      url   => $row->{url},
+      token => $token,
+    };
+  }
+  api_response {servers => \@servers};
 };
 
 get '/my/downloads' => sub {
