@@ -127,7 +127,7 @@ get "/uploads" => sub {
           ON t.id = ut.tag_id
         WHERE ut.upload_id = ?
     });
-    my $sth = $_->prepare(q{SELECT * FROM upload LIMIT ?, ?});
+    my $sth = $_->prepare(q{SELECT * FROM upload ORDER BY id DESC LIMIT ?, ?});
     $sth->execute(limit $req);
     while (my $upload = $sth->fetchrow_hashref) {
       $tags->execute($upload->{id});
@@ -157,6 +157,7 @@ get qr{/user/(\d+)} => sub {
       SELECT u.*
         FROM upload AS u
         WHERE u.user_id = ?
+        ORDER BY u.id DESC
         LIMIT ?,?
     });
     $sth->execute($user_id, limit $req);
@@ -194,6 +195,7 @@ get qr{/tag/([^/]+)} => sub {
         INNER JOIN upload AS u
           ON u.id = ut.upload_id
         WHERE t.slug = ?
+        ORDER BY ut.upload_id DESC
         LIMIT ?,?
     });
     $sth->execute($slug, limit $req);
