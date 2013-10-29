@@ -9,8 +9,7 @@
   </div>
   <div class="field-value" id="tags">
     <form method="POST" action="/tracker/api/my/tags" class="api-form tag-input" data-partial="tags">
-      <input type="text" name="tag">
-      <input type="submit" value="Add">
+      <input type="text" name="tag" placeholder="add tag">
     </form>
     <ul class="tag-list">
       <: for $tags -> $tag { :>
@@ -31,8 +30,7 @@
   </div>
   <div class="field-value" id="users">
     <form method="POST" action="/tracker/api/my/users" class="api-form user-input" data-partial="users">
-      <input type="text" name="user">
-      <input type="submit" value="Add">
+      <input type="text" name="user" placeholder="add user">
     </form>
     <ul class="tag-list">
       <: for $users -> $user { :>

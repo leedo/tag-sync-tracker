@@ -67,7 +67,7 @@
       <td class="server-tags" id="server-<: $server.id :>-tags">
         <form method="POST" action="/tracker/api/my/tags" class="api-form tag-input" data-partial="server-<: $server.id :>-tags">
           <input type="hidden" name="server_request" value="<: $server.id :>">
-          <input type="text" name="tag">
+          <input type="text" name="tag" placeholder="add tag">
         </form>
         <ul class="tag-list">
         <: for $server.tags -> $tag { :>
@@ -85,7 +85,7 @@
       <td class="server-users" id="server-<: $server.id :>-users">
         <form method="POST" action="/tracker/api/my/users" class="api-form user-input" data-partial="server-<: $server.id :>-users">
           <input type="hidden" name="server_request" value="<: $server.id :>">
-          <input type="text" name="user">
+          <input type="text" name="user" placeholder="add user">
         </form>
         <ul class="tag-list">
         <: for $server.users -> $user { :>

@@ -60,7 +60,7 @@
     <: } :>
     </ul>
     <form method="POST" action="/tracker/api/upload/<: $upload.id :>/tags" class="api-form tag-input" data-partial="upload-<: $upload.id :>-tags">
-      <input type="text" name="tag">
+      <input type="text" name="tag" placeholder="add tag">
     </form>
   </div>
 </div>
