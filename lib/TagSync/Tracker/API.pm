@@ -55,53 +55,6 @@ sub limit {
   ($page - 1) * 50, 50;
 }
 
-## Upload endpoints
-
-get '/uploads' => sub {
-  my ($self, $req) = @_;
-
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare(q{SELECT * FROM upload LIMIT ?, ?});
-    $sth->execute(limit $req);
-    $sth;
-  });
-
-  api_response {uploads => $sth->fetchall_arrayref({})};
-};
-
-get qr{/upload/(\d+)} => sub {
-  my ($self, $req, $upload_id) = @_;
-
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare(q{SELECT * FROM UPLOAD WHERE id = ?});
-    $sth->execute($upload_id);
-    $sth;
-  });
-
-  my $upload = $sth->fetchrow_hashref;
-  die "invalid upload id" unless defined $upload;
-
-  api_response {upload => $upload};
-};
-
-get qr{/upload/(\d+)/tags} => sub {
-  my ($self, $req, $upload_id) = @_;
-
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare(q{
-      SELECT t.id, t.slug
-      FROM tag AS t
-        INNER JOIN upload_tag AS ut
-          on ut.tag_id = t.id
-      WHERE ut.upload_id = ?
-    });
-    $sth->execute($upload_id);
-    $sth;
-  });
-
-  api_response {tags => $sth->fetchall_arrayref({})};
-};
-
 post qr{/upload/(\d+)/tags} => sub {
   my ($self, $req, $upload_id) = @_;
   my $tag = $req->parameters->{tag};
@@ -257,107 +210,6 @@ get qr{/upload/([^/]+)/servers} => sub {
   });
 };
 
-
-## User endpoints
-
-get qr{/user/(\d+)/uploads} => sub {
-  my ($self, $req, $user_id) = @_;
-  my $query = q{
-    SELECT *
-    FROM upload
-    WHERE user_id = ?
-    LIMIT ?, ?
-  };
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare($query);
-    $sth->execute($user_id, limit $req);
-    $sth;
-  });
-
-  api_response {uploads => $sth->fetchall_arrayref({})};
-};
-
-get qr{/user/(\d+)/servers} => sub {
-  my ($self, $req, $user_id) = @_;
-  my $query = q{
-    SELECT s.id, s.name, s.url, s.token
-    FROM server AS s
-      INNER JOIN user_subscription AS us
-        ON us.subscriber_id = s.id
-    WHERE us.user_id = ?
-      AND us.type = "server"
-    LIMIT ?, ?
-  };
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare($query);
-    $sth->execute($user_id, limit $req);
-    $sth;
-  });
-
-  my @servers;
-  while (my $row = $sth->fetchrow_hashref) {
-    my $body = encode_json {time => time}; 
-    my $sig = hmac_sha1_hex $body, $row->{token};
-    my $token = encode_base64 join ":", $sig, $body;
-    push @servers, {
-      id    => $row->{id},
-      name  => $row->{name},
-      url   => $row->{url},
-      token => $token,
-    };
-  }
-  api_response {servers => \@servers};
-};
-
-
-## Tag endpoints
-
-get qr{/tag/([^/]+)/servers} => sub {
-  my ($self, $req, $slug) = @_;
-  my $query = q{
-    SELECT s.id, s.name
-    FROM server AS s
-      INNER JOIN tag_subscription AS ts
-        ON ts.subscriber_id = s.id
-      INNER JOIN tag AS t
-        ON ts.tag_id = t.id
-    WHERE t.slug = ?
-      AND ts.type = "server"
-    LIMIT ?, ?
-  };
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare($query);
-    $sth->execute($slug, limit $req);
-    $sth;
-  });
-
-  api_response {servers => $sth->fetchall_arrayref({})};
-};
-
-get qr{/tag/([^/]+)/uploads} => sub {
-  my ($self, $req, $tag) = @_;
-
-  my $query = q{
-    SELECT u.*
-    FROM upload AS u
-      INNER JOIN upload_tag AS ut
-        ON ut.upload_id = u.id
-      INNER JOIN tag AS t
-        ON t.id = ut.tag_id
-    WHERE t.slug = ?
-    LIMIT ?, ?
-  };
-
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare($query);
-    $sth->execute($tag, limit $req);
-    $sth;
-  });
-
-  api_response {uploads => $sth->fetchall_arrayref({})};
-};
-
-
 ## Account endpoints
 
 post '/my/servers' => sub {
@@ -408,54 +260,6 @@ del qr{/my/server/(\d+)/token} => sub {
   api_response { success => "ok", token => $token }; 
 };
 
-get '/my/upload/servers' => sub {
-  my ($self, $req) = @_;
-
-  my @tags = map {s/^\s+//; s/\s+$//; $_} $req->parameters->get_all('tags[]');
-  my $tag_placeholders = join ",", map {"?"} 0 .. $#tags;
-
-  my $query = qq{
-    SELECT s.id, s.name, s.token, s.url
-    FROM server AS s
-    WHERE
-      s.id IN (
-        SELECT us.subscriber_id
-        FROM user_subscription AS us
-        WHERE us.user_id = ?
-          AND us.type = "server"
-      )
-      OR
-      s.id IN (
-        SELECT ts.subscriber_id
-        FROM tag_subscription AS ts
-          INNER JOIN tag AS t
-            ON t.id = ts.tag_id
-        WHERE ts.type = "server"
-          AND t.slug IN ($tag_placeholders)
-      )
-  };
-
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare($query);
-    $sth->execute($req->id, @tags);
-    $sth;
-  });
-
-  my @servers;
-  while (my $row = $sth->fetchrow_hashref) {
-    my $body  = encode_json {time => $time}; 
-    my $sig   = hmac_sha1_hex $body, $row->{token};
-    my $token = encode_base64 join ":", $sig, $body;
-    push @servers, {
-      id    => $row->{id},
-      name  => $row->{name},
-      url   => $row->{url},
-      token => $token,
-    };
-  }
-  api_response {servers => \@servers};
-};
-
 get '/my/downloads' => sub {
   my ($self, $req) = @_;
 
@@ -487,48 +291,6 @@ get '/my/downloads' => sub {
   });
 
   api_response {downloads => $sth->fetchall_arrayref({})};
-};
-
-get '/my/users' => sub {
-  my ($self, $req) = @_;
-
-  my $query = q{
-    SELECT us.user_id
-    FROM user_subscription AS us
-    WHERE us.type = ?
-      AND us.subscriber_id = ?
-    LIMIT ?, ?
-  };
-
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare($query);
-    $sth->execute($req->type, $req->id, limit $req);
-    $sth;
-  });
-
-  api_response {users => $sth->fetchall_arrayref({})};
-};
-
-get '/my/tags' => sub {
-  my ($self, $req) = @_;
-
-  my $query = q{
-    SELECT t.id, t.slug
-    FROM tag AS t
-      INNER JOIN tag_subscription AS ts
-        ON ts.tag_id = t.id
-    WHERE ts.type = ?
-      AND ts.subscriber_id = ?
-    LIMIT ?, ?
-  };
-
-  my $sth = $self->db->run(sub {
-    my $sth = $_->prepare($query);
-    $sth->execute($req->type, $req->id, limit $req);
-    $sth;
-  });
-
-  api_response {tags => $sth->fetchall_arrayref({})};
 };
 
 post '/my/tags' => sub {
