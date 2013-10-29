@@ -126,16 +126,22 @@ td.server-tags {
 .table-list > tbody > tr > td {
   padding: 6px 8px;
 }
+.user-users form,
+.user-tags form,
 .upload-tags form,
 .server-tags form,
 .server-users form {
   display: block;
   margin: 0;
 }
-.upload-tags form input[type="text"],
-.server-tags form input[type="text"],
-.server-users form input[type="text"] {
+form.user-input input[type="text"],
+form.tag-input input[type="text"] {
   width: 132px;
+  margin: 0;
+}
+form.user-input input[type="text"]:focus,
+form.tag-input input[type="text"]:focus {
+  outline: none;
 }
 .table-list thead > tr > th,
 .table-list tbody > tr > td {
@@ -213,4 +219,18 @@ ul.file-downloads a.up {
 }
 ul.file-downloads a.down {
   background: #FFEEEA;
+}
+.tt-dropdown-menu {
+  background: #fff;
+  width: 132px;
+}
+.tt-dropdown-menu p {
+  margin: 0;
+}
+.tt-suggestion {
+  padding: 3px;
+}
+.tt-is-under-cursor {
+  background: #4B80FF;
+  color: #fff;
 }

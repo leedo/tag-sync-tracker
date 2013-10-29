@@ -10,6 +10,7 @@ tracker.update_partial = function(id) {
       var replacement = container.find('#' + id).remove();
       $('#' + id).replaceWith(replacement);
       container.remove();
+      tracker.setup_events($('#' + id));
     }
   });
 };
@@ -54,19 +55,32 @@ tracker.form_api_request = function(form, success) {
   });
 };
 
-$(document).ready(function() {
-  $('body').on('submit', 'form.api-form', function(e) {
+tracker.setup_events = function(root) {
+  root.find('form.api-form').on('submit', function(e) {
     e.preventDefault();
     tracker.form_api_request($(this));
   });
-  $('#upload-complete').on('submit', function(e) {
+
+  root.find('#upload-complete').on('submit', function(e) {
     e.preventDefault();
     tracker.form_api_request($(this), function(res) {
       window.location = "/tracker/upload/" + res.upload;
     });
   });
 
-  $('#server-refresh').on('click', function(e) {
+  root.find('form.tag-input input[type="text"]').typeahead({
+    name: "tags",
+    prefetch: "/tracker/tags.json",
+    limit: 10
+  });
+
+  root.find('form.tag-input input[type="text"]').on('keypress', function(e) {
+    if (e.keyCode == 13) {
+      $(this).parents("form").submit();
+    }
+  });
+
+  root.find('#server-refresh').on('click', function(e) {
     e.preventDefault();
     $.ajax({
       type: 'GET',
@@ -96,7 +110,7 @@ $(document).ready(function() {
     });
   });
 
-  $('#server').on('change', function(e) {
+  root.find('#server').on('change', function(e) {
     var select = $(this);
     var option = select.find("option:selected");
     var form = select.parents('form');
@@ -105,7 +119,7 @@ $(document).ready(function() {
     form.find('#return').val(window.location.toString());
   });
 
-  $('#new-upload').on('submit', function(e) {
+  root.find('#new-upload').on('submit', function(e) {
     if (!"getFormData" in this) return;
     e.preventDefault();
 
@@ -163,7 +177,7 @@ $(document).ready(function() {
     xhr.send(data);
   });
 
-  $('.server-status').each(function(i, el) {
+  root.find('.server-status').each(function(i, el) {
     var el = $(el);
     $.ajax({
       type: "get",
@@ -178,7 +192,7 @@ $(document).ready(function() {
     });
   });
 
-  $('.timestamp').each(function() {
+  root.find('.timestamp').each(function() {
     var span = $(this);
     var date = new Date(span.text() * 1000);
     var year = date.getYear() + 1900;
@@ -187,7 +201,7 @@ $(document).ready(function() {
     span.html(display);
   });
 
-  $('.file-downloads').each(function() {
+  root.find('.file-downloads').each(function() {
     var container = $(this)
       , hash = container.attr('data-hash')
       , id = container.attr('data-id');
@@ -214,5 +228,9 @@ $(document).ready(function() {
       }
     });
   });
-});  
+}
+
+$(document).ready(function() {
+  tracker.setup_events($(document));
+});
 

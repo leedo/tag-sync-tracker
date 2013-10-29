@@ -64,13 +64,12 @@
         </table>
       </td>
 
-      <td class="server-tags">
-        <form method="POST" action="/tracker/api/my/tags" class="api-form" data-partial="server-<: $server.id :>-tags">
+      <td class="server-tags" id="server-<: $server.id :>-tags">
+        <form method="POST" action="/tracker/api/my/tags" class="api-form tag-input" data-partial="server-<: $server.id :>-tags">
           <input type="hidden" name="server_request" value="<: $server.id :>">
           <input type="text" name="tag">
-          <input type="submit" value="Add">
         </form>
-        <ul class="tag-list" id="server-<: $server.id :>-tags">
+        <ul class="tag-list">
         <: for $server.tags -> $tag { :>
           <li>
             <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
@@ -83,13 +82,12 @@
         </ul>
       </td>
 
-      <td class="server-users">
-        <form method="POST" action="/tracker/api/my/users" class="api-form" data-partial="server-<: $server.id :>-users">
+      <td class="server-users" id="server-<: $server.id :>-users">
+        <form method="POST" action="/tracker/api/my/users" class="api-form user-input" data-partial="server-<: $server.id :>-users">
           <input type="hidden" name="server_request" value="<: $server.id :>">
           <input type="text" name="user">
-          <input type="submit" value="Add">
         </form>
-        <ul class="tag-list" id="server-<: $server.id :>-users">
+        <ul class="tag-list">
         <: for $server.users -> $user { :>
           <li>
             <: $user.username :>

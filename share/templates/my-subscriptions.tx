@@ -8,7 +8,7 @@
     Tags you follow
   </div>
   <div class="field-value" id="tags">
-    <form method="POST" action="/tracker/api/my/tags" class="api-form" data-partial="tags">
+    <form method="POST" action="/tracker/api/my/tags" class="api-form tag-input" data-partial="tags">
       <input type="text" name="tag">
       <input type="submit" value="Add">
     </form>
@@ -30,7 +30,7 @@
     Users you follow
   </div>
   <div class="field-value" id="users">
-    <form method="POST" action="/tracker/api/my/users" class="api-form" data-partial="users">
+    <form method="POST" action="/tracker/api/my/users" class="api-form user-input" data-partial="users">
       <input type="text" name="user">
       <input type="submit" value="Add">
     </form>

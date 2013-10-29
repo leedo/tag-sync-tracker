@@ -290,4 +290,17 @@ get "/my-subscriptions" => sub {
   $self->render("my-subscriptions", {users => \@users, tags => \@tags});
 };
 
+get "/tags.json" => sub {
+  my ($self, $req) = @_;
+  my @tags;
+  $self->db->run(sub {
+    my $sth = $_->prepare(q{SELECT id,slug FROM tag});
+    $sth->execute;
+    while (my $row = $sth->fetchrow_hashref) {
+      push @tags, $row->{slug};
+    }
+  });
+  api_response \@tags;
+};
+
 1;

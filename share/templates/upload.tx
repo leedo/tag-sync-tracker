@@ -47,8 +47,8 @@
   <div class="field-label">
     Tags
   </div>
-  <div class="field-value upload-tags">
-    <ul class="tag-list" id="upload-<: $upload.id :>-tags">
+  <div class="field-value upload-tags" id="upload-<: $upload.id :>-tags">
+    <ul class="tag-list">
     <: for $upload.tags -> $tag { :>
       <li>
         <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
@@ -58,11 +58,10 @@
 
       </li>
     <: } :>
-      <form method="POST" action="/tracker/api/upload/<: $upload.id :>/tags" class="api-form" data-partial="upload-<: $upload.id :>-tags">
-        <input type="text" name="tag">
-        <input type="submit" value="Add">
-      </form>
     </ul>
+    <form method="POST" action="/tracker/api/upload/<: $upload.id :>/tags" class="api-form tag-input" data-partial="upload-<: $upload.id :>-tags">
+      <input type="text" name="tag">
+    </form>
   </div>
 </div>
 
