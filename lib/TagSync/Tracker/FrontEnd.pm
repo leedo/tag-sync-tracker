@@ -55,6 +55,21 @@ get "/upload" => sub {
 
   # step 2
   my $data = decode_json decode_base64 uri_unescape $key;
+  
+  # check if this hash already exists...
+  my $sth = $self->db->run(sub {
+    my $sth = $_->prepare(q{SELECT * FROM upload WHERE hash = ?});
+    $sth->execute($data->{hash});
+    $sth;
+  });
+
+  if (my $existing = $sth->fetchrow_hashref) {
+    return $self->render('upload-exists', {
+      upload => $existing,
+      data   => $data,
+    });
+  }
+
   $self->render('upload-complete', $data);
 };
 

@@ -1,0 +1,11 @@
+: cascade common
+: override body -> {
+<h2>Upload already exists</h2>
+<p>
+You uploaded a file named "<: $data.filename :>". An upload
+already existed in the traker with the same hash.
+</p>
+<p>
+<a href="/tracker/upload/<: $upload.id :>">View original upload "<: $upload.filename :></a>
+</p>
+: }
