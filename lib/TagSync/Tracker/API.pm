@@ -162,11 +162,15 @@ get qr{/upload/([^/]+)/servers} => sub {
       FROM server AS s
       INNER JOIN tag_subscription AS ts
         ON ts.subscriber_id = s.id
-      WHERE ts.type = "server"
-        AND ts.tag_id IN (
-          SELECT ut.tag_id
-          FROM upload_tag AS ut
-          WHERE ut.upload_id = ?
+      WHERE
+        s.everything = 1
+        OR (
+          ts.type = "server"
+          AND ts.tag_id IN (
+            SELECT ut.tag_id
+            FROM upload_tag AS ut
+            WHERE ut.upload_id = ?
+          )
         )
     });
 
@@ -271,6 +275,33 @@ del qr{/my/server/(\d+)/token} => sub {
   api_response { success => "ok", token => $token }; 
 };
 
+post qr{/my/server/(\d+)} => sub {
+  my ($self, $req, $server_id) = @_;
+  my $p = $req->parameters;
+  my %fields;
+
+  for (qw{name url}) {
+    if (defined $p->{$_} and $p->{$_} ne "") {
+      $fields{$_} = $p->{$_};
+    }
+  }
+
+  if (defined $p->{everything}) {
+    $fields{everything} = $p->{everything} eq "on" ? 1 : 0;
+  }
+
+  $self->db->run(sub {
+    for my $col (keys %fields) {
+      my $name = $_->quote_identifier($col);
+      $_->do(qq{
+        UPDATE server SET $name=? WHERE id=? AND user_id=?
+      }, undef, $fields{$col}, $server_id, $req->id);
+    }
+  });
+
+  api_response_ok;
+};
+
 get '/my/upload/servers' => sub {
   my ($self, $req) = @_;
 
@@ -281,6 +312,8 @@ get '/my/upload/servers' => sub {
     SELECT s.id, s.name, s.token, s.url
     FROM server AS s
     WHERE
+      s.everything = 1
+      OR
       s.id IN (
         SELECT us.subscriber_id
         FROM user_subscription AS us

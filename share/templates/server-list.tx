@@ -4,19 +4,20 @@
 <table class="table-list" cellspacing="0">
   <thead>
     <tr>
+      <th></th>  
       <th>Name</th>
       <th>Admin</th>
-      <th>Status</th>  
       <th>Mirroring tags</th>
       <th>Mirroring users</th>
+      <th title="Mirror everything?">All?</th>
     </tr>
   </thead>
   <tbody>
 : for $servers -> $server {
     <tr>
+      <td><span class="status server-status down" data-status-url="<: $server.url :>/ping"></span></td>
       <td><: $server.name :></td>
       <td><: $server.admin.username :></td>
-      <td><span class="status server-status down" data-status-url="<: $server.url :>/ping"></span></td>
       <td>
         <ul class="tag-list">
         <: for $server.tags -> $tag { :>
@@ -31,6 +32,7 @@
         <: } :>
         </ul>
       </td>
+      <td><: $server.everything ? "✓" : "" :></td>
     </tr>
 : }
   </tbody>

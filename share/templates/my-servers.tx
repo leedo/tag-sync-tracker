@@ -34,17 +34,22 @@
 <table class="table-list" id="my-server-list" cellspacing="0">
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
       <th>Info</th>
       <th>Mirror tags</th>
       <th>Mirror users</th>
-      <th>Status</th>
+      <th title="Mirror everything?">All?</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
 : for $servers -> $server {
     <tr>
+      <td>
+        <span class="status server-status down" data-status-url="<: $server.url :>/ping"></span>
+      </td>
+
       <td><: $server.name :></td>
 
       <td>
@@ -100,8 +105,10 @@
         </ul>
       </td>
 
-      <td>
-        <span class="status server-status down" data-status-url="<: $server.url :>/ping"></span>
+      <td title="Mirror everything?">
+        <form method="POST" action="/tracker/api/my/server/<: $server.id :>" class="api-form mirror-everything" data-partial="my-server-list">
+          <input type="checkbox" name="everything"<: $server.everything ? " checked" : "" :>>
+        </form>
       </td>
 
       <td class="actions">

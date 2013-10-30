@@ -2,6 +2,10 @@
 : override id -> { "my-subscriptions" }
 : override body -> {
 <h2>My tags and users</h2>
+<p>
+These values will effect what appears in your
+<a href="/tracker/my-uploads">suggestions</a>.
+</p>
 
 <div class="field">
   <div class="field-label">

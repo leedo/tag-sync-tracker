@@ -44,5 +44,6 @@ CREATE TABLE server (
   token TEXT UNIQUE NOT NULL,
   url TEXT NOT NULL,
   last_sync INTEGER NOT NULL,
-  user_id INTEGER NOT NULL
+  user_id INTEGER NOT NULL,
+  everything INTEGER NOT NULL DEFAULT 0
 );

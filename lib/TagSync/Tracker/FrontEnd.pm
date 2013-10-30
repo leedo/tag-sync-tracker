@@ -9,6 +9,7 @@ use Plack::Request;
 use Text::Xslate;
 use URI::Escape;
 use MIME::Base64;
+use Encode;
 use JSON;
 
 sub prepare_req {
@@ -38,7 +39,7 @@ sub limit {
 
 sub render {
   my ($self, $page, $vars) = @_;
-  my $html = $self->template->render("$page.tx", $vars);
+  my $html = encode "utf8", $self->template->render("$page.tx", $vars);
   return [
     200,
     ["Content-Type", "text/html"],

@@ -103,6 +103,14 @@ tracker.setup_events = function(root) {
     }
   });
 
+  root.find('.mirror-everything input[type="checkbox"]').on("change", function(e) {
+    var orig = $(this);
+    var input = $('<input/>',{name: "everything", type: "hidden"});
+    input.val(orig.prop("checked") ? "on" : "off");
+    orig.replaceWith(input);
+    input.parents("form").submit();
+  });
+
   root.find('#server-refresh').on('click', function(e) {
     e.preventDefault();
     var tags = $.map($('input[name="tags"]'), function(input) {
