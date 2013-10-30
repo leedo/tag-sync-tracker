@@ -49,7 +49,6 @@ body {
 .field-value {
   margin-left: 160px;
   padding: 10px;
-  min-height: 16px;
 }
 .field-value input[type="text"] {
   width: 300px;
@@ -78,6 +77,10 @@ td.server-tags {
   margin: 0;
   padding: 0;
   list-style: none;
+  overflow: hidden;
+}
+.upload-tags .tag-list {
+  float: left;
 }
 .tag-list li {
   display: block;
@@ -242,10 +245,4 @@ ul.file-downloads a.down {
 .tt-is-under-cursor {
   background: #4B80FF;
   color: #fff;
-}
-.field-label:after,
-.field-value:after {
-  display: block;
-  clear: both;
-  content: " ";
 }
