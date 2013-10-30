@@ -1,17 +1,20 @@
 <ul id="nav">
   <li>
+    <a href="/tracker/my-uploads">Suggestions</a>
+  </li>
+  <li>
+    <a href="/tracker/uploads">All uploads</a>
+  </li>
+  <li>
     <a href="/tracker/upload">New upload</a>
   </li>
   <li>
-    <a href="/tracker/uploads">Uploads</a>
+    <a href="/tracker/my-subscriptions">My tags and users</a>
   </li>
   <li>
     <a href="/tracker/servers">All servers</a>
   </li>
   <li>
     <a href="/tracker/my-servers">My servers</a>
-  </li>
-  <li>
-    <a href="/tracker/my-subscriptions">My tags and users</a>
   </li>
 </ul>

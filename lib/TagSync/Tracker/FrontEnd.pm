@@ -263,6 +263,59 @@ get "/servers" => sub {
   $self->render('server-list', {servers => \@servers});
 };
 
+get "/my-uploads" => sub {
+  my ($self, $req) = @_;
+  my @uploads;
+
+  my $query = q{
+    SELECT u.*
+    FROM upload AS u
+    WHERE
+      u.user_id IN (
+        SELECT us.user_id
+        FROM user_subscription AS us
+        WHERE us.subscriber_id = ?
+          AND us.type = "user"
+      )
+      OR
+      u.id IN (
+        SELECT ut.upload_id
+        FROM upload_tag AS ut
+          INNER JOIN tag_subscription AS ts
+            ON ts.tag_id = ut.tag_id
+        WHERE ts.subscriber_id = ?
+          AND ts.type = "user"
+        GROUP BY ut.upload_id
+      )
+    ORDER BY u.id DESC
+    LIMIT ?, ?
+  };
+
+
+  $self->db->run(sub {
+    my $sth = $_->prepare($query);
+    my $tags = $_->prepare(q{
+      SELECT t.slug, t.id
+        FROM upload_tag AS ut
+        INNER JOIN tag AS t
+          ON t.id = ut.tag_id
+        WHERE ut.upload_id = ?
+    });
+    $sth->execute($req->id, $req->id, limit $req);
+    while (my $upload = $sth->fetchrow_hashref) {
+      $tags->execute($upload->{id});
+      $upload->{tags} = $tags->fetchall_arrayref({});
+      $upload->{user} = $self->auth->identify_users($upload->{user_id})->[0];
+      push @uploads, $upload;
+    }
+  });
+
+  $self->render("uploads", {
+    uploads => \@uploads,
+    title => "Suggestions",
+  });
+};
+
 get "/my-subscriptions" => sub {
   my ($self, $req) = @_;
   my @users, @tags;

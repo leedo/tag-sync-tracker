@@ -15,7 +15,7 @@
       <: for $tags -> $tag { :>
       <li>
         <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
-        <form method="DELETE" action="/tracker/api/my/tags/<: $tag.slug :>" class="api-form" data-partial="tags">
+        <form method="DELETE" action="/tracker/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="tags">
           <input type="submit" value="x">
         </form>
       </li>
@@ -36,7 +36,7 @@
       <: for $users -> $user { :>
       <li>
         <a href="/tracker/user/<: $user.id :>"><: $user.username :></a>
-        <form method="DELETE" action="/tracker/api/my/users/<: $user.id :>" class="api-form" data-partial="users">
+        <form method="DELETE" action="/tracker/api/my/user/<: $user.id :>" class="api-form" data-partial="users">
           <input type="submit" value="x">
         </form>
       </li>

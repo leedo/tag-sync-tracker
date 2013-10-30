@@ -137,7 +137,7 @@ post '/upload' => sub {
       }, undef, $slug);
 
       $_->do(q{
-        INSERT OR IGNORE INTO upload_tag (upload_id, tag_id) 
+        INSERT OR IGNORE INTO upload_tag (upload_id, tag_id, user_id) 
           SELECT ?,tag.id,?
           FROM tag
           WHERE tag.slug = ?
@@ -330,6 +330,7 @@ get '/my/downloads' => sub {
         SELECT us.user_id
         FROM user_subscription AS us
         WHERE us.subscriber_id = ?
+          AND us.type = ?
       )
       OR
       u.id IN (
@@ -338,6 +339,7 @@ get '/my/downloads' => sub {
           INNER JOIN tag_subscription AS ts
             ON ts.tag_id = ut.tag_id
         WHERE ts.subscriber_id = ?
+          AND ts.type = ?
         GROUP BY ut.upload_id
       )
     LIMIT ?, ?
@@ -345,7 +347,7 @@ get '/my/downloads' => sub {
 
   my $sth = $self->db->run(sub {
     my $sth = $_->prepare($query);
-    $sth->execute($req->id, $req->id, limit $req);
+    $sth->execute($req->id, $req->type, $req->id, $req->type, limit $req);
     $sth;
   });
 
