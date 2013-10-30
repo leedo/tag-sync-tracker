@@ -32,7 +32,16 @@ sub find_userid {
     $sth;
   });
   return $sth->fetchrow_array;
+}
 
+sub search_users {
+  my ($self, $query) = @_;
+  my $sth = $self->{db}->run(sub {
+    my $sth = $_->prepare(q{SELECT username FROM users WHERE username LIKE ? LIMIT 10});
+    $sth->execute($query . "%");
+    $sth;
+  });
+  return map {$_->[0]} @{$sth->fetchall_arrayref};
 }
 
 sub identify_users {
@@ -43,7 +52,7 @@ sub identify_users {
     $sth->execute(@user_ids);
     $sth;
   });
-  $sth->fetchall_arrayref({});
+  return $sth->fetchall_arrayref({});
 }
 
 1;

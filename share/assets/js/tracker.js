@@ -74,7 +74,13 @@ tracker.setup_events = function(root) {
     limit: 10
   });
 
-  root.find('form.tag-input input[type="text"]').on('keypress', function(e) {
+  root.find('form.user-input input[type="text"]').typeahead({
+    name: "users",
+    remote: "/tracker/users.json?q=%QUERY",
+    limit: 10
+  });
+
+  root.find('.tag-input input, .user-input input').on('keypress', function(e) {
     if (e.keyCode == 13) {
       $(this).parents("form").submit();
     }

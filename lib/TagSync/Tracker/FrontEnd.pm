@@ -136,7 +136,7 @@ get "/uploads" => sub {
 
   $self->db->run(sub {
     my $tags = $_->prepare(q{
-      SELECT t.slug, t.id, t.user_id
+      SELECT t.slug, t.id
         FROM upload_tag AS ut
         INNER JOIN tag AS t
           ON t.id = ut.tag_id
@@ -301,6 +301,13 @@ get "/tags.json" => sub {
     }
   });
   api_response \@tags;
+};
+
+get "/users.json" => sub {
+  my ($self, $req) = @_;
+  die "query is required" unless defined $req->parameters->{q};
+  my @users = $self->auth->search_users($req->parameters->{q});
+  api_response \@users;
 };
 
 1;

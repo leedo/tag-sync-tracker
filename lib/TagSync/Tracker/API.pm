@@ -138,10 +138,10 @@ post '/upload' => sub {
 
       $_->do(q{
         INSERT OR IGNORE INTO upload_tag (upload_id, tag_id) 
-          SELECT ?, tag.id
+          SELECT ?,tag.id,?
           FROM tag
           WHERE tag.slug = ?
-      }, undef, $upload_id, $slug); 
+      }, undef, $upload_id, $req->id, $slug); 
     }
   });
 
@@ -238,10 +238,22 @@ del qr{/my/server/(\d+)} => sub {
 
   die "only for users" unless $req->type eq "user";
 
-  $self->db->run(sub {
+  $self->db->txn(sub {
     $_->do(q{
-      DELETE FROM server WHERE id = ? AND user_id = ?
+      DELETE FROM server
+      WHERE id = ?
+        AND user_id = ?
     }, undef, $server_id, $req->id);
+    $_->do(q{
+      DELETE FROM tag_subscription
+      WHERE subscriber_id = ?
+        AND type = "server"
+    }, undef, $server_id);
+    $_->do(q{
+      DELETE FROM user_subscription
+      WHERE subscriber_id = ?
+        AND type = "server"
+    }, undef, $server_id);
   });
 
   api_response_ok;

@@ -231,6 +231,7 @@ ul.file-downloads a.down {
 .tt-dropdown-menu {
   background: #fff;
   width: 132px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.25);
 }
 .tt-dropdown-menu p {
   margin: 0;
@@ -241,4 +242,10 @@ ul.file-downloads a.down {
 .tt-is-under-cursor {
   background: #4B80FF;
   color: #fff;
+}
+.field-label:after,
+.field-value:after {
+  display: block;
+  clear: both;
+  content: " ";
 }
