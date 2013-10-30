@@ -199,12 +199,20 @@ tracker.setup_events = function(root) {
   });
 
   root.find('.timestamp').each(function() {
-    var span = $(this);
-    var date = new Date(span.text() * 1000);
-    var year = date.getYear() + 1900;
-    var display = [year, date.getMonth(), date.getDate()].join("/")
-      + " " + [date.getHours(), date.getMinutes()].join(":");
-    span.html(display);
+    var span = $(this)
+      , date = new Date(span.text() * 1000)
+      , year = date.getYear() + 1900
+      , mon  = date.getMonth()
+      , day  = date.getDate()
+      , min  = date.getMinutes()
+      , hour = date.getHours();
+
+    if (min < 10) min = "0" + String(min);
+    if (hour < 10) hour = "0" + String(hour);
+    if (mon < 10) mon = "0" + String(mon);
+    if (day < 10) mon = "0" + String(day);
+
+    span.html([year, mon, day].join("/") + " " + [hour, min].join(":"));
   });
 
   root.find('.file-downloads').each(function() {
