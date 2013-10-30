@@ -19,9 +19,9 @@
   <div class="field-label">
     <label for="tags">Tags</label>
   </div>
-  <div class="field-value">
-    <input type="text" name="tags" id="tags">
-    <p class="field-note">(comma separated)</p>
+  <div class="field-value tags">
+    <input type="text" id="tag-input" placeholder="add tag">
+    <ul class="tag-list" id="tag-list"></ul>
   </div>
 </div>
 

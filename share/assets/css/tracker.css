@@ -50,7 +50,7 @@ body {
   margin-left: 160px;
   padding: 10px;
 }
-.field-value input[type="text"] {
+.field-value > input[type="text"] {
   width: 300px;
 }
 .field-value textarea {
@@ -145,11 +145,13 @@ form.tag-input {
   display: block;
   margin: 0;
 }
+form#new-upload .tags input[type="text"],
 form.user-input input[type="text"],
 form.tag-input input[type="text"] {
   width: 132px;
   margin: 0;
 }
+form#new-upload .tags input[type="text"]:focus,
 form.user-input input[type="text"]:focus,
 form.tag-input input[type="text"]:focus {
   outline: none;

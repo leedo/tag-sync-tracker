@@ -68,10 +68,27 @@ tracker.setup_events = function(root) {
     });
   });
 
-  root.find('form.tag-input input[type="text"]').typeahead({
+  root.find('#new-upload #tag-input, form.tag-input input[type="text"]').typeahead({
     name: "tags",
     prefetch: "/tracker/tags.json",
     limit: 10
+  });
+
+  root.find('#new-upload #tag-input').on('keypress', function(e) {
+    if (e.keyCode != 13)
+      return;
+
+    e.preventDefault();
+    var input = $(this);
+    var tag = input.val();
+    var list = $('#tag-list');
+    var hidden = $('<input/>', {
+      type: "hidden",
+      value: tag,
+      name: "tags"
+    });
+    list.append($('<li/>').html(tag).append(hidden));
+    input.typeahead('setQuery', '');
   });
 
   root.find('form.user-input input[type="text"]').typeahead({
@@ -88,11 +105,14 @@ tracker.setup_events = function(root) {
 
   root.find('#server-refresh').on('click', function(e) {
     e.preventDefault();
+    var tags = $.map($('input[name="tags"]'), function(input) {
+      return $(input).val();
+    });
     $.ajax({
       type: 'GET',
       dataType: "json",
       url: '/tracker/api/my/upload/servers',
-      data: { tags: $('#tags').val().split(",") },
+      data: { tags: tags },
       success: function(res) {
         if (res['error']) {
           console.log(res['error']);
