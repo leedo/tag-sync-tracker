@@ -266,7 +266,7 @@ del qr{/my/server/(\d+)} => sub {
 del qr{/my/server/(\d+)/token} => sub {
   my ($self, $req, $server_id) = @_;
 
-  my $token =  sha1_hex(rand(time));
+  my $token = sha1_hex(rand(time));
   $self->db->run(sub {
     $_->do(q{
       UPDATE server SET token = ? WHERE id = ? AND user_id = ?
@@ -379,8 +379,22 @@ get '/my/downloads' => sub {
   };
 
   my $sth = $self->db->run(sub {
+    my @bind = ($req->id, $req->type, $req->id, $req->type);
+
+    # check if server subscribers to everything
+    # if so, modify query and bind vars
+    if ($req->type eq "server") {
+      my ($everything) = $_->selectrow_array(q{
+        SELECT everything FROM server WHERE id = ?
+      }, undef, $req->id);
+      if ($everything) {
+        $query = q{SELECT * FROM upload LIMIT ?, ?};
+        @bind = ();
+      }
+    }
+
     my $sth = $_->prepare($query);
-    $sth->execute($req->id, $req->type, $req->id, $req->type, limit $req);
+    $sth->execute(@bind, limit $req);
     $sth;
   });
 
