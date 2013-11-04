@@ -1,4 +1,5 @@
 requires 'Plack';
+requires 'Plack::Middleware::ReverseProxy';
 requires 'JSON';
 requires 'Digest::SHA1';
 requires 'Text::Xslate';

@@ -11,6 +11,11 @@ use MIME::Base64;
 use URI::Escape;
 use JSON;
 
+sub error {
+  my ($self, $error) = @_;
+  api_error($error);
+}
+
 sub prepare_req {
   my ($self, $env) = @_;
   my $req = TagSync::Tracker::Request::factory($env);
@@ -157,20 +162,20 @@ get qr{/upload/([^/]+)/servers} => sub {
       SELECT * FROM upload WHERE id = ?
     }, undef, $upload_id);
 
+    my $all = $_->prepare(q{
+      SELECT * FROM server WHERE everything = 1
+    });
     my $tags = $_->prepare(q{
       SELECT s.*
       FROM server AS s
       INNER JOIN tag_subscription AS ts
         ON ts.subscriber_id = s.id
       WHERE
-        s.everything = 1
-        OR (
-          ts.type = "server"
-          AND ts.tag_id IN (
-            SELECT ut.tag_id
-            FROM upload_tag AS ut
-            WHERE ut.upload_id = ?
-          )
+        ts.type = "server"
+        AND ts.tag_id IN (
+          SELECT ut.tag_id
+          FROM upload_tag AS ut
+          WHERE ut.upload_id = ?
         )
     });
 
@@ -201,6 +206,11 @@ get qr{/upload/([^/]+)/servers} => sub {
         token => $token,
       };
     };
+
+    $all->execute;
+    while (my $row = $all->fetchrow_hashref) {
+      push @servers, $sign->($row);
+    }
 
     $tags->execute($upload_id);
     while (my $row = $tags->fetchrow_hashref) {
@@ -474,6 +484,20 @@ del qr{/my/user/(\d+)} => sub {
         AND subscriber_id = ?
         AND type = ?
     }, undef, $sub_id, $req->id, $req->type);
+  });
+
+  api_response_ok;
+};
+
+post qr{/upload/(\d+)/fetches} => sub {
+  my ($self, $req, $upload_id) = @_;
+  die "server id is required" unless defined $req->parameters->{server};
+  my $server_id = $req->parameters->{server};
+
+  $self->db->run(sub {
+    $_->do(q{INSERT INTO upload_fetch (upload_id, server_id, timestamp)
+      VALUES(?,?,?)
+    }, undef, $upload_id, $server_id, time);
   });
 
   api_response_ok;

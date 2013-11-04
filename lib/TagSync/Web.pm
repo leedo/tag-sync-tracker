@@ -64,7 +64,7 @@ sub call {
 
   if ($@) {
     my ($error) = $@ =~ /(.*) at .+\.pm line \d+/;
-    return api_error($error);
+    return $self->error($error);
   }
 
   return $res;

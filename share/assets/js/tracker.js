@@ -255,7 +255,9 @@ tracker.setup_events = function(root) {
       success: function(res) {
         $(res.servers).each(function(i, server) {
           var url = server.url + "/download/" + hash + "?token=" + server.token;
-          var link = $('<a/>',{href: url}).html(server.name);
+          var link = $('<a/>',{href: url, target: "_blank"}).html(server.name);
+          link.attr('data-server-id', server.id);
+          link.attr('data-upload-id', id);
           container.append($('<li/>').append(link));
           $.ajax({
             type: "GET",
@@ -268,6 +270,18 @@ tracker.setup_events = function(root) {
           });
         });
       }
+    });
+  });
+
+  root.find('.file-downloads').on('click', 'li a', function(e) {
+    var link = $(this)
+      , id = link.attr('data-upload-id')
+      , server = link.attr('data-server-id');
+
+    $.ajax({
+      type: "POST",
+      url: "/tracker/api/upload/" + id + "/fetches",
+      data: {server: server}
     });
   });
 }

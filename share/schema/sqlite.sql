@@ -47,3 +47,9 @@ CREATE TABLE server (
   user_id INTEGER NOT NULL,
   everything INTEGER NOT NULL DEFAULT 0
 );
+
+CREATE TABLE upload_fetch (
+  upload_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  server_id INTEGER NOT NULL,
+  timestamp INTEGER NOT NULL
+);

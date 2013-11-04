@@ -1,0 +1,4 @@
+: include "header.tx"
+<h2>Oh no! There was an error :'(</h2>
+<p><: $error || "unknown error" :></p>
+: include "footer.tx"

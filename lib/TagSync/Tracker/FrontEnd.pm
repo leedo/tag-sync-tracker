@@ -12,6 +12,11 @@ use MIME::Base64;
 use Encode;
 use JSON;
 
+sub error {
+  my ($self, $error) = @_;
+  $self->render("error", {error => $error});
+}
+
 sub prepare_req {
   my ($self, $env) = @_;
 
@@ -119,9 +124,13 @@ get qr{/upload/(\d+)} => sub {
           ON t.id = ut.tag_id
         WHERE ut.upload_id = ?
     });
+
     my $sth = $_->prepare(q{SELECT * FROM upload WHERE id = ?});
     $sth->execute($upload_id);
     my $upload = $sth->fetchrow_hashref;
+
+    die "invalid upload id" unless defined $upload;
+
     $tags->execute($upload_id);
     $upload->{tags} = $tags->fetchall_arrayref({});
     $upload->{user} = $self->auth->identify_users($upload->{user_id})->[0];
