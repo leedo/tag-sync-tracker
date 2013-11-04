@@ -124,6 +124,11 @@ get qr{/upload/(\d+)} => sub {
           ON t.id = ut.tag_id
         WHERE ut.upload_id = ?
     });
+    my $fetches = $_->prepare(q{
+      SELECT COUNT(*)
+      FROM upload_fetch
+      WHERE upload_id = ?
+    });
 
     my $sth = $_->prepare(q{SELECT * FROM upload WHERE id = ?});
     $sth->execute($upload_id);
@@ -132,8 +137,10 @@ get qr{/upload/(\d+)} => sub {
     die "invalid upload id" unless defined $upload;
 
     $tags->execute($upload_id);
+    $fetches->execute($upload_id);
     $upload->{tags} = $tags->fetchall_arrayref({});
     $upload->{user} = $self->auth->identify_users($upload->{user_id})->[0];
+    ($upload->{fetches}) = $fetches->fetchrow_array;
     $upload;
   });
 
