@@ -60,6 +60,7 @@ body {
 .field {
   padding: 0;
   clear: both;
+  background: #fff;
 }
 .field:nth-child(odd) {
   background: #efefef;
@@ -220,7 +221,10 @@ ul.file-downloads {
   padding: 0;
 }
 ul.file-downloads li {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid transparent;
+}
+ul.file-downloads li:last-child {
+  border-bottom: none;
 }
 ul.file-downloads li a {
   display: block;

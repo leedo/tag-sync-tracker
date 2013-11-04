@@ -1,10 +1,10 @@
-: if (!$partial) {
 : include "header.tx"
+
+: if !$embed {
 : include "nav.tx"
 : }
+
 <div id="<: block id -> { } :>">
 : block body -> { }
 </div>
-: if (!$partial) {
 : include "footer.tx"
-: }

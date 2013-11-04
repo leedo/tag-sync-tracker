@@ -38,7 +38,7 @@
   </div>
   <div class="field-value">
     <ul class="tag-list">
-      <li><a href="/tracker/user/<: $upload.user.id :>"><: $upload.user.username :></a></li>
+      <li><a href="/tracker/user/<: $upload.user.id :>"<: if $embed { ' target="_top"' } :>><: $upload.user.username :></a></li>
     </ul>
   </div>
 </div>
@@ -51,7 +51,7 @@
     <ul class="tag-list">
     <: for $upload.tags -> $tag { :>
       <li>
-        <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
+        <a href="/tracker/tag/<: $tag.slug :>"<: if $embed { ' target="_top"' } :>><: $tag.slug :></a>
         <: if $tag.user_id == $user_id { :>
         <form method="DELETE" action="/tracker/api/upload/<: $upload.id :>/tag/<: $tag.slug :>" class="api-form" data-partial="upload-<: $upload.id :>-tags">
           <input type="submit" value="x">
@@ -110,6 +110,17 @@
     <: $upload.info :>
   </div>
 </div>
+
+: if !$embed {
+<div class="field">
+  <div class="field-label">
+    Embed tag
+  </div>
+  <div class="field-value">
+    <span style="font-family:monospace">[tracker=<: $upload.id :>][/tracker]</span>
+  </div>
+</div>
+: }
 
 <h3>Servers that should have this file</h3>
 <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></ul>

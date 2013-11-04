@@ -113,8 +113,8 @@ get "/my-servers" => sub {
   $self->render('my-servers', {servers => \@servers});
 };
 
-get qr{/upload/(\d+)} => sub {
-  my ($self, $req, $upload_id) = @_;
+get qr{/upload/(\d+)(/embed)?} => sub {
+  my ($self, $req, $upload_id, $embed) = @_;
 
   my $upload = $self->db->run(sub {
     my $tags = $_->prepare(q{
@@ -144,7 +144,11 @@ get qr{/upload/(\d+)} => sub {
     $upload;
   });
 
-  $self->render('upload', {upload => $upload, user_id => $req->id});
+  $self->render('upload', {
+    upload => $upload,
+    user_id => $req->id,
+    embed => defined $embed
+  });
 };
 
 get "/uploads" => sub {
