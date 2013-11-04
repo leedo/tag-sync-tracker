@@ -14,7 +14,6 @@ sub auth_request {
   my $cookie = $req->cookies->{punbb_cookie};
   die "Not logged in" unless defined $cookie;
 
-  warn $cookie;
   my $auth = unserialize uri_unescape $cookie;
   $auth->[0] =~ s/\+/ /;
   $auth->[1] =~ s/\+/ /;
