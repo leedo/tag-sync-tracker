@@ -5,3 +5,4 @@ docs/*.html
 .carton
 local
 tracker.psgi
+tracker.pid

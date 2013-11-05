@@ -2,6 +2,7 @@
 : override id -> { "my-servers" }
 : override body -> {
 <h2>Register a new server</h2>
+<p>Get the <a href="https://github.com/leedo/tag-sync-mirror">tag-sync mirror</a> server software to run a new mirror.</p>
 <form action="/tracker/api/my/servers" method="POST" class="api-form" data-partial="my-servers">
   <div class="field">
     <div class="field-label">

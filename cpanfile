@@ -9,6 +9,8 @@ requires 'DBD::mysql';
 requires 'DBD::SQLite';
 requires 'Digest::HMAC_SHA1';
 requires 'Starman';
+requires 'Server::Starter';
+requires 'Net::Server::SS::PreFork';
 
 on 'test' => sub {
 	requires 'Test::More';
