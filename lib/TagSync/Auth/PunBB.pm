@@ -15,9 +15,9 @@ sub auth_request {
   die "Not logged in" unless defined $cookie;
 
   my $auth = unserialize uri_unescape $cookie;
-  $auth->[0] =~ s/\+/ /;
-  $auth->[1] =~ s/\+/ /;
-
+  $auth->[0] =~ s/\+/ /g;
+  $auth->[1] =~ s/\+/ /g;
+  
   my $sth = $self->{db}->run(sub {
     my $sth = $_->prepare(q{SELECT id FROM users WHERE username = ? AND password = ?});
     $sth->execute(@$auth);
