@@ -491,13 +491,15 @@ del qr{/my/user/(\d+)} => sub {
 
 post qr{/upload/(\d+)/fetches} => sub {
   my ($self, $req, $upload_id) = @_;
+  die "users only" unless $req->type eq "user";
   die "server id is required" unless defined $req->parameters->{server};
+
   my $server_id = $req->parameters->{server};
 
   $self->db->run(sub {
-    $_->do(q{INSERT INTO upload_fetch (upload_id, server_id, timestamp)
-      VALUES(?,?,?)
-    }, undef, $upload_id, $server_id, time);
+    $_->do(q{INSERT INTO upload_fetch (upload_id, server_id, user_id, timestamp)
+      VALUES(?,?,?,?)
+    }, undef, $upload_id, $req->id, $server_id, time);
   });
 
   api_response_ok;
