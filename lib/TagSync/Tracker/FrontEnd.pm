@@ -384,4 +384,9 @@ get "/users.json" => sub {
   api_response \@users;
 };
 
+get "" => sub {
+  my ($self, $req) = @_;
+  [301, ["Location", "/tracker/uploads"], ["moved"]];
+};
+
 1;
