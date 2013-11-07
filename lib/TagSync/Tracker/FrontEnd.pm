@@ -83,7 +83,7 @@ get "/my-servers" => sub {
   my ($self, $req) = @_;
   my @servers;
 
-  my $sth = $self->db->run(sub {
+  $self->db->run(sub {
     my $sth = $_->prepare(q{SELECT * FROM server WHERE user_id = ?});
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
@@ -253,7 +253,7 @@ get "/servers" => sub {
   my ($self, $req) = @_;
   my @servers;
 
-  my $sth = $self->db->run(sub {
+  $self->db->run(sub {
     my $sth = $_->prepare("SELECT * FROM server");
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
