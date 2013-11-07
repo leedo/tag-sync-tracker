@@ -11,11 +11,8 @@ sub factory {
   if (my $token = $env->{HTTP_X_SERVER_AUTH}) {
     return TagSync::Tracker::Request::Server->new($env, $token);
   }
-  else {
-    return TagSync::Tracker::Request::User->new($env);
-  }
 
-  die "auth header missing";
+  return TagSync::Tracker::Request::User->new($env);
 }
 
 sub set_id {

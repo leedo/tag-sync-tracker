@@ -11,12 +11,12 @@ sub import {
 
   foreach my $meth (qw{get put post}) {
     *{"$package\::$meth"} = sub {
-      req($routes, uc $meth, @_);
+      add_route($routes, uc $meth, @_);
     };
   }
 
   *{"$package\::del"} = sub {
-    req($routes, "DELETE", @_);
+    add_route($routes, "DELETE", @_);
   };
 
   *{"$package\::call"} = sub {
@@ -29,7 +29,7 @@ sub import {
   *{"$package\::api_error"}       = \&api_error;
 }
 
-sub req {
+sub add_route {
   my ($routes, $method, $path, $handler) = @_;
   my $fixed;
   if (ref $path eq "Regexp") {
