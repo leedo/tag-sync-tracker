@@ -87,17 +87,17 @@ get "/my-servers" => sub {
     my $sth = $_->prepare(q{SELECT * FROM server WHERE user_id = ?});
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
-        FROM tag_subscription AS ts
-        INNER JOIN tag AS t
-          ON t.id = ts.tag_id
-        WHERE type = "server"
-          AND subscriber_id = ?
+      FROM tag_subscription AS ts
+      INNER JOIN tag AS t
+        ON t.id = ts.tag_id
+      WHERE type = "server"
+        AND subscriber_id = ?
     });
     my $users = $_->prepare(q{
       SELECT us.user_id
-        FROM user_subscription AS us
-        WHERE type="server"
-          AND subscriber_id = ?
+      FROM user_subscription AS us
+      WHERE type="server"
+        AND subscriber_id = ?
     });
     $sth->execute($req->id);
     while (my $server = $sth->fetchrow_hashref) {
@@ -119,10 +119,10 @@ get qr{/upload/(\d+)(/embed)?} => sub {
   my $upload = $self->db->run(sub {
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id, ut.user_id
-        FROM upload_tag AS ut
-        INNER JOIN tag AS t
-          ON t.id = ut.tag_id
-        WHERE ut.upload_id = ?
+      FROM upload_tag AS ut
+      INNER JOIN tag AS t
+        ON t.id = ut.tag_id
+      WHERE ut.upload_id = ?
     });
     my $fetches = $_->prepare(q{
       SELECT COUNT(*)
@@ -158,10 +158,10 @@ get "/uploads" => sub {
   $self->db->run(sub {
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
-        FROM upload_tag AS ut
-        INNER JOIN tag AS t
-          ON t.id = ut.tag_id
-        WHERE ut.upload_id = ?
+      FROM upload_tag AS ut
+      INNER JOIN tag AS t
+        ON t.id = ut.tag_id
+      WHERE ut.upload_id = ?
     });
     my $sth = $_->prepare(q{SELECT * FROM upload ORDER BY id DESC LIMIT ?, ?});
     $sth->execute(limit $req);
@@ -184,17 +184,17 @@ get qr{/user/(\d+)} => sub {
   $self->db->run(sub {
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
-        FROM upload_tag AS ut
-        INNER JOIN tag AS t
-          ON t.id = ut.tag_id
-        WHERE ut.upload_id = ?
+      FROM upload_tag AS ut
+      INNER JOIN tag AS t
+        ON t.id = ut.tag_id
+      WHERE ut.upload_id = ?
     });
     my $sth = $_->prepare(q{
       SELECT u.*
-        FROM upload AS u
-        WHERE u.user_id = ?
-        ORDER BY u.id DESC
-        LIMIT ?,?
+      FROM upload AS u
+      WHERE u.user_id = ?
+      ORDER BY u.id DESC
+      LIMIT ?,?
     });
     $sth->execute($user_id, limit $req);
     while (my $upload = $sth->fetchrow_hashref) {
@@ -218,21 +218,21 @@ get qr{/tag/([^/]+)} => sub {
   $self->db->run(sub {
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
-        FROM upload_tag AS ut
-        INNER JOIN tag AS t
-          ON t.id = ut.tag_id
-        WHERE ut.upload_id = ?
+      FROM upload_tag AS ut
+      INNER JOIN tag AS t
+        ON t.id = ut.tag_id
+      WHERE ut.upload_id = ?
     });
     my $sth = $_->prepare(q{
       SELECT u.*
-        FROM upload_tag AS ut
-        INNER JOIN tag AS t
-          ON t.id = ut.tag_id
-        INNER JOIN upload AS u
-          ON u.id = ut.upload_id
-        WHERE t.slug = ?
-        ORDER BY ut.upload_id DESC
-        LIMIT ?,?
+      FROM upload_tag AS ut
+      INNER JOIN tag AS t
+        ON t.id = ut.tag_id
+      INNER JOIN upload AS u
+        ON u.id = ut.upload_id
+      WHERE t.slug = ?
+      ORDER BY ut.upload_id DESC
+      LIMIT ?,?
     });
     $sth->execute($slug, limit $req);
     while (my $upload = $sth->fetchrow_hashref) {
@@ -257,17 +257,17 @@ get "/servers" => sub {
     my $sth = $_->prepare("SELECT * FROM server");
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
-        FROM tag_subscription AS ts
-        INNER JOIN tag AS t
-          ON t.id = ts.tag_id
-        WHERE type = "server"
-          AND subscriber_id = ?
+      FROM tag_subscription AS ts
+      INNER JOIN tag AS t
+        ON t.id = ts.tag_id
+      WHERE type = "server"
+        AND subscriber_id = ?
     });
     my $users = $_->prepare(q{
       SELECT us.user_id
-        FROM user_subscription AS us
-        WHERE type="server"
-          AND subscriber_id = ?
+      FROM user_subscription AS us
+      WHERE type="server"
+        AND subscriber_id = ?
     });
     $sth->execute;
     while (my $server = $sth->fetchrow_hashref) {
@@ -317,10 +317,10 @@ get "/my-uploads" => sub {
     my $sth = $_->prepare($query);
     my $tags = $_->prepare(q{
       SELECT t.slug, t.id
-        FROM upload_tag AS ut
-        INNER JOIN tag AS t
-          ON t.id = ut.tag_id
-        WHERE ut.upload_id = ?
+      FROM upload_tag AS ut
+      INNER JOIN tag AS t
+        ON t.id = ut.tag_id
+      WHERE ut.upload_id = ?
     });
     $sth->execute($req->id, $req->id, limit $req);
     while (my $upload = $sth->fetchrow_hashref) {
