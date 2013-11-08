@@ -1,0 +1,8 @@
+: cascade common
+: override body -> {
+<h2>Tag: <: $tag :></h2>
+
+<h3>Recent uploads</h3>
+: include "upload-list.tx" {uploads => $uploads}
+
+: }

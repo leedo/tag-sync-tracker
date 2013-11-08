@@ -7,6 +7,7 @@ These values will effect what appears in your
 <a href="/tracker/my-uploads">suggestions</a>.
 </p>
 
+<div>
 <div class="field">
   <div class="field-label">
     Tags you follow
@@ -48,6 +49,6 @@ These values will effect what appears in your
     </ul>
   </div>
 </div>
-
+</div>
 
 : }

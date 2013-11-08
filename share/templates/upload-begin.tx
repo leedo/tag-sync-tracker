@@ -6,6 +6,7 @@
 <input id="token" type="hidden" name="token" value="">
 <input id="return" type="hidden" name="return" value="/upload">
 
+<div>
 <div class="field">
   <div class="field-label">
     <label for="file">Upload</label>
@@ -46,6 +47,7 @@
     </div>
     <span class="status"></span>
   </div>
+</div>
 </div>
 </form>
 : }

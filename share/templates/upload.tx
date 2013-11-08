@@ -1,7 +1,9 @@
 : cascade common
 : override id -> { "upload" }
 : override body -> {
+: if !$embed {
 <h2><: $upload.artist :> - <: $upload.title :></h2>
+: }
 
 <div>
 
@@ -122,8 +124,8 @@
 </div>
 : }
 
+</div>
+
 <h3>Servers that should have this file</h3>
 <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></ul>
-
-</div>
 : }

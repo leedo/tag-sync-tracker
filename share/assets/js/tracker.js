@@ -238,9 +238,10 @@ tracker.setup_events = function(root) {
     if (min < 10) min = "0" + String(min);
     if (hour < 10) hour = "0" + String(hour);
     if (mon < 10) mon = "0" + String(mon);
-    if (day < 10) mon = "0" + String(day);
+    if (day < 10) day = "0" + String(day);
 
-    span.html([year, mon, day].join("/") + " " + [hour, min].join(":"));
+    span.html([year, mon, day].join("/"));
+    span.attr("title", date.toString());
   });
 
   root.find('.file-downloads').each(function() {

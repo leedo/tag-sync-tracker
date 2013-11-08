@@ -170,7 +170,6 @@ span.token {
   font-size: 12px;
 }
 .table-list > thead > tr > th {
-  border-bottom: 1px solid #ccc;
   color: #999;
   font-weight: normal;
 }
@@ -258,4 +257,24 @@ ul.file-downloads a.down {
   font-size: 0.8em;
   color: #333;
   padding-left: 2px;
+}
+.field:first-child,
+.table-list tr:first-child td:first-child {
+  border-top-left-radius: 4px;
+}
+.field:first-child .field-value,
+.table-list tr:first-child td:last-child {
+  border-top-right-radius: 4px;
+}
+.field:last-child,
+.table-list tr:last-child td:first-child {
+  border-bottom-left-radius: 4px;
+}
+.field:last-child .field-value,
+.table-list tr:last-child td:last-child {
+  border-bottom-right-radius: 4px;
+}
+
+#follow-user {
+  float: right;
 }

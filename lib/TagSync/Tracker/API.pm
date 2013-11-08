@@ -499,7 +499,7 @@ post qr{/upload/(\d+)/fetches} => sub {
   $self->db->run(sub {
     $_->do(q{INSERT INTO upload_fetch (upload_id, server_id, user_id, timestamp)
       VALUES(?,?,?,?)
-    }, undef, $upload_id, $req->id, $server_id, time);
+    }, undef, $upload_id, $server_id, $req->id, time);
   });
 
   api_response_ok;

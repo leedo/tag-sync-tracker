@@ -186,36 +186,81 @@ get "/uploads" => sub {
 
 get qr{/user/(\d+)} => sub {
   my ($self, $req, $user_id) = @_;
-  my @uploads;
+  my (@uploads, @downloads, $users, $tags, $following);
   $user = $self->auth->identify_users($user_id)->[0];
 
   $self->db->run(sub {
-    my $tags = $_->prepare(q{
+    my $tag_sth = $_->prepare(q{
       SELECT t.slug, t.id
       FROM upload_tag AS ut
       INNER JOIN tag AS t
         ON t.id = ut.tag_id
       WHERE ut.upload_id = ?
     });
-    my $sth = $_->prepare(q{
+    my $upload_sth = $_->prepare(q{
       SELECT u.*
       FROM upload AS u
       WHERE u.user_id = ?
       ORDER BY u.id DESC
       LIMIT ?,?
     });
-    $sth->execute($user_id, limit $req);
-    while (my $upload = $sth->fetchrow_hashref) {
-      $tags->execute($upload->{id});
-      $upload->{tags} = $tags->fetchall_arrayref({});
+    my $download_sth = $_->prepare(q{
+      SELECT u.*,uf.timestamp
+      FROM upload_fetch AS uf
+      INNER JOIN upload as u
+        ON u.id = uf.upload_id
+      WHERE uf.user_id = ?
+      ORDER BY uf.timestamp DESC
+      LIMIT ?,?
+    });
+    $upload_sth->execute($user_id, limit $req);
+    while (my $upload = $upload_sth->fetchrow_hashref) {
+      $tag_sth->execute($upload->{id});
+      $upload->{tags} = $tag_sth->fetchall_arrayref({});
       $upload->{user} = $user;
       push @uploads, $upload;
     }
+    $download_sth->execute($user_id, limit $req);
+    while (my $download = $download_sth->fetchrow_hashref) {
+      $tag_sth->execute($download->{id});
+      $download->{tags} = $tag_sth->fetchall_arrayref({});
+      $download->{user} = $user;
+      $download->{upload_date} = $download->{timestamp};
+      push @downloads, $download;
+    }
+    ($following) = $_->selectrow_array(q{
+      SELECT 1 
+      FROM user_subscription AS us
+      WHERE subscriber_id = ?
+      AND type = "user"
+      AND user_id = ?
+    }, undef, $req->id, $user_id);
+
+    $tags = $_->selectall_arrayref(q{
+      SELECT t.*
+      FROM tag_subscription AS ts
+      INNER JOIN tag AS t
+        ON t.id = ts.tag_id
+      WHERE ts.type = "user"
+        AND ts.subscriber_id = ?
+    }, {Slice => {}}, $req->id);
+    
+    my $user_ids = $_->selectall_arrayref(q{
+      SELECT us.user_id
+      FROM user_subscription AS us
+      WHERE us.type = "user"
+        AND us.subscriber_id = ?
+    }, undef, $req->id);
+    $users = $self->auth->identify_users(map {$_->[0]} @$user_ids);
   });
 
-  $self->render("uploads", {
+  $self->render("user", {
     uploads => \@uploads,
-    title => "User: $user->{username}",
+    downloads => \@downloads,
+    following => $following,
+    tags => $tags,
+    users => $users,
+    user => $user,
   });
 };
 
@@ -251,9 +296,9 @@ get qr{/tag/([^/]+)} => sub {
     }
   });
 
-  $self->render("uploads", {
+  $self->render("tag", {
     uploads => \@uploads,
-    title => "Tag: $slug",
+    tag => $slug,
   });
 };
 
