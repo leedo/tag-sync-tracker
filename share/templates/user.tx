@@ -25,7 +25,7 @@
 </ul>
 
 <h3>Following users</h3>
-<ul class="tag-list">
+<ul class="tag-list user-list">
 : for $users -> $user {
   <li>
     <a href="/tracker/user/<: $user.id :>"><: $user.username :></a>

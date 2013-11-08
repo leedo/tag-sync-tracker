@@ -93,7 +93,7 @@
           <input type="hidden" name="server_request" value="<: $server.id :>">
           <input type="text" name="user" placeholder="add user">
         </form>
-        <ul class="tag-list">
+        <ul class="tag-list user-list">
         <: for $server.users -> $user { :>
           <li>
             <: $user.username :>

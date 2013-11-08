@@ -39,7 +39,7 @@
     Uploaded by
   </div>
   <div class="field-value">
-    <ul class="tag-list">
+    <ul class="tag-list user-list">
       <li><a href="/tracker/user/<: $upload.user.id :>"<: if $embed { ' target="_top"' } :>><: $upload.user.username :></a></li>
     </ul>
   </div>

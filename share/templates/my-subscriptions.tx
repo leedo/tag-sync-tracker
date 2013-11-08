@@ -37,7 +37,7 @@ These values will effect what appears in your
     <form method="POST" action="/tracker/api/my/users" class="api-form user-input" data-partial="users">
       <input type="text" name="user" placeholder="add user">
     </form>
-    <ul class="tag-list">
+    <ul class="tag-list user-list">
       <: for $users -> $user { :>
       <li>
         <a href="/tracker/user/<: $user.id :>"><: $user.username :></a>
