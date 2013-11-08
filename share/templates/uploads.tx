@@ -8,6 +8,7 @@
       <th>Artist</th>
       <th>Album</th>
       <th>Quality</th>
+      <th>Size</th>
       <th>Tags</th>
       <th>User</th>
       <th>Date</th>
@@ -19,7 +20,8 @@
     <tr>
       <td><: $upload.artist :></td>
       <td><: $upload.title :></td>
-      <td><: $upload.quality :> (<: $upload.size :> bytes)</td>
+      <td><: $upload.quality :></td>
+      <td><: $upload.size | megabytes :><span class="filesize">MB</span></td>
       <td>
         <ul class="tag-list">
         <: for $upload.tags -> $tag { :>

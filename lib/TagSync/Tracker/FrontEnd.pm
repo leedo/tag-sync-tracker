@@ -32,7 +32,15 @@ sub prepare_req {
 sub template {
   my $self = shift;
   $self->{template} ||= do {
-    Text::Xslate->new(path => ["share/templates"]);
+    Text::Xslate->new(
+      path => ["share/templates"],
+      function => {
+        megabytes => sub {
+          my $bytes = shift;
+          return int($bytes / 1024 / 1024);
+        },
+      }
+    );
   };
 }
 

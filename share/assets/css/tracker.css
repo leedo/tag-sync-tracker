@@ -97,6 +97,7 @@ td.server-tags {
 .tag-list li a {
   color: #fff;
   text-decoration: none;
+  white-space: nowrap;
 }
 .tag-list li form {
   display: inline;
@@ -252,4 +253,9 @@ ul.file-downloads a.down {
 .tt-is-under-cursor {
   background: #4B80FF;
   color: #fff;
+}
+.filesize {
+  font-size: 0.8em;
+  color: #333;
+  padding-left: 2px;
 }

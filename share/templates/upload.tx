@@ -80,7 +80,7 @@
     Size
   </div>
   <div class="field-value">
-    <: $upload.size :>
+    <: $upload.size | megabytes :><span class="filesize">MB</span>
   </div>
 </div>
 
