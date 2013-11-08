@@ -1,4 +1,5 @@
 <ul id="nav">
+  <li class="title">Tag-sync tracker</li>
   <li>
     <a href="/tracker/my-uploads">Suggestions</a>
   </li>
