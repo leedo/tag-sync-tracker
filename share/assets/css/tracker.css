@@ -9,10 +9,14 @@ span.status.up:after {
   line-height: 1em;
   content: "▲";
 }
+body {
+  margin: 0;
+}
 ul#nav {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 5px;
+  background: #eee;
 }
 ul#nav li {
   display: inline-block;
@@ -22,7 +26,7 @@ ul#nav li {
 ul#nav li a {
   text-decoration: none;
   font-weight: bold;
-  color: inherit;
+  color: #999;
 }
 ul#nav li:last-child {
   border-right: none;
@@ -277,4 +281,17 @@ ul.file-downloads a.down {
 
 #follow-user {
   float: right;
+}
+.container {
+  padding: 10px;
+}
+h2 {
+  margin-top: 0;
+  border-bottom: 3px solid #eee;
+}
+h3 {
+  border-bottom: 1px solid #eee;
+}
+h2 a {
+  text-decoration: none;
 }

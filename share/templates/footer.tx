@@ -2,5 +2,6 @@
     <script type="text/javascript" src="/tracker/assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="/tracker/assets/js/typeahead.min.js"></script>
     <script type="text/javascript" src="/tracker/assets/js/tracker.js"></script>
+    </div>
   </body>
 </html>
