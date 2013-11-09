@@ -31,7 +31,7 @@ ul#nav li {
 ul#nav li a {
   text-decoration: none;
   font-weight: bold;
-  color: #999;
+  color: #888;
 }
 ul#nav li a:hover {
   color: #666;
@@ -306,4 +306,10 @@ h3 {
 }
 h2 a {
   text-decoration: none;
+}
+#follower-count {
+  padding-right: 10px;
+  border-right: 1px solid #eee;
+  margin-right: 10px;
+  font-size: 12px;
 }

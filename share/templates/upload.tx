@@ -126,6 +126,6 @@
 
 </div>
 
-<h3>Servers that should have this file</h3>
+<h3>Servers that should have this file <span style="font-size:12px;font-weight:normal">(click server name to download)</span></h3>
 <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></ul>
 : }

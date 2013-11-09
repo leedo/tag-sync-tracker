@@ -37,7 +37,7 @@ sub template {
       function => {
         megabytes => sub {
           my $bytes = shift;
-          return int($bytes / 1024 / 1024);
+          return int($bytes / 1000 / 1000);
         },
       }
     );
@@ -186,7 +186,7 @@ get "/uploads" => sub {
 
 get qr{/user/(\d+)} => sub {
   my ($self, $req, $user_id) = @_;
-  my (@uploads, @downloads, $users, $tags, $following);
+  my (@uploads, @downloads, $users, $tags, $following, $followers);
   $user = $self->auth->identify_users($user_id)->[0];
 
   $self->db->run(sub {
@@ -224,17 +224,23 @@ get qr{/user/(\d+)} => sub {
     while (my $download = $download_sth->fetchrow_hashref) {
       $tag_sth->execute($download->{id});
       $download->{tags} = $tag_sth->fetchall_arrayref({});
-      $download->{user} = $user;
+      $download->{user} = $self->auth->identify_users($download->{user_id})->[0];
       $download->{upload_date} = $download->{timestamp};
       push @downloads, $download;
     }
     ($following) = $_->selectrow_array(q{
       SELECT 1 
-      FROM user_subscription AS us
+      FROM user_subscription
       WHERE subscriber_id = ?
       AND type = "user"
       AND user_id = ?
     }, undef, $req->id, $user_id);
+
+    ($followers) = $_->selectrow_array(q{
+      SELECT COUNT(*)
+      FROM user_subscription
+      WHERE user_id = ?
+    }, undef, $user_id);
 
     $tags = $_->selectall_arrayref(q{
       SELECT t.*
@@ -243,14 +249,14 @@ get qr{/user/(\d+)} => sub {
         ON t.id = ts.tag_id
       WHERE ts.type = "user"
         AND ts.subscriber_id = ?
-    }, {Slice => {}}, $req->id);
+    }, {Slice => {}}, $user_id);
     
     my $user_ids = $_->selectall_arrayref(q{
       SELECT us.user_id
       FROM user_subscription AS us
       WHERE us.type = "user"
         AND us.subscriber_id = ?
-    }, undef, $req->id);
+    }, undef, $user_id);
     $users = $self->auth->identify_users(map {$_->[0]} @$user_ids);
   });
 
@@ -258,6 +264,7 @@ get qr{/user/(\d+)} => sub {
     uploads => \@uploads,
     downloads => \@downloads,
     following => $following,
+    followers => ($followers || 0),
     tags => $tags,
     users => $users,
     user => $user,

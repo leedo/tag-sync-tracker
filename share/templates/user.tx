@@ -1,12 +1,15 @@
 : cascade common
 : override body -> {
 <div id="follow-user">
+<span id="follower-count">
+<strong><: $followers :></strong> Follower<: if $followers > 1 { :>s<: } :>
+</span>
 : if $following {
-<form action="/tracker/api/my/user/<: $user.id :>" method="DELETE" class="api-form" data-partial="follow-user">
+<form action="/tracker/api/my/user/<: $user.id :>" method="DELETE" class="api-form" data-partial="follow-user" style="display:inline">
 <input type="submit" value="Unfollow">
 </form>
 : } else {
-<form action="/tracker/api/my/users" method="POST" class="api-form" data-partial="follow-user">
+<form action="/tracker/api/my/users" method="POST" class="api-form" data-partial="follow-user" style="display:inline">
 <input type="hidden" name="user" value="<: $user.username :>">
 <input type="submit" value="Follow">
 </form>
@@ -16,6 +19,7 @@
 <h2>User: <a href="/profile.php?id=<: $user.id :>"><: $user.username :></a></h2>
 
 <h3>Following tags</h3>
+:if $tags.size() > 0 {
 <ul class="tag-list">
 : for $tags -> $tag {
   <li>
@@ -23,8 +27,12 @@
   </li>
 : }
 </ul>
+: } else {
+None
+: }
 
 <h3>Following users</h3>
+:if $tags.size() > 0 {
 <ul class="tag-list user-list">
 : for $users -> $user {
   <li>
@@ -32,6 +40,9 @@
   </li>
 : }
 </ul>
+: } else {
+None
+: }
 
 
 <h3>Recent uploads</h3>
