@@ -4,7 +4,7 @@
       <th>Artist</th>
       <th>Album</th>
       <th>Quality</th>
-      <th>Size</th>
+      <th style="text-align:center">Size</th>
       <th>Tags</th>
       <th>User</th>
       <th>Date</th>
@@ -16,8 +16,8 @@
     <tr>
       <td><: $upload.artist :></td>
       <td><a href="/tracker/upload/<: $upload.id :>"><: $upload.title :></a></td>
-      <td><: $upload.quality :></td>
-      <td><: $upload.size | megabytes :><span class="filesize">MB</span></td>
+      <td style="width:70px"><: $upload.quality :></td>
+      <td style="text-align:right;width:40px"><: $upload.size | megabytes :><span class="filesize">MB</span></td>
       <td>
         <ul class="tag-list">
         <: for $upload.tags -> $tag { :>
@@ -30,8 +30,8 @@
           <li><a href="/tracker/user/<: $upload.user.id :>"><: $upload.user.username :></a></li>
         </ul>
       </td>
-      <td><span class="timestamp"><: $upload.upload_date :></span></td>
-      <td><a href="/tracker/upload/<: $upload.id :>">View</a></td>
+      <td style="width:70px"><span class="timestamp"><: $upload.upload_date :></span></td>
+      <td style="width:40px"><a href="/tracker/upload/<: $upload.id :>">View</a></td>
     </tr>
 : }
   </tbody>

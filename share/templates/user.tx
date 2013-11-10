@@ -1,18 +1,16 @@
 : cascade common
 : override body -> {
 <div id="follow-user">
-<span id="follower-count">
-<strong><: $followers :></strong> Follower<: if $followers > 1 { :>s<: } :>
-</span>
+  <span id="follower-count"><: $followers :> follower<: if $followers == 0 or $followers > 1 { :>s<: } :></span>
 : if $following {
-<form action="/tracker/api/my/user/<: $user.id :>" method="DELETE" class="api-form" data-partial="follow-user" style="display:inline">
-<input type="submit" value="Unfollow">
-</form>
+  <form action="/tracker/api/my/user/<: $user.id :>" method="DELETE" class="api-form" data-partial="follow-user" style="display:inline">
+    <input type="submit" value="Unfollow">
+  </form>
 : } else {
-<form action="/tracker/api/my/users" method="POST" class="api-form" data-partial="follow-user" style="display:inline">
-<input type="hidden" name="user" value="<: $user.username :>">
-<input type="submit" value="Follow">
-</form>
+  <form action="/tracker/api/my/users" method="POST" class="api-form" data-partial="follow-user" style="display:inline">
+    <input type="hidden" name="user" value="<: $user.username :>">
+    <input type="submit" value="Follow">
+  </form>
 : }
 </div>
 
@@ -22,9 +20,7 @@
 :if $tags.size() > 0 {
 <ul class="tag-list">
 : for $tags -> $tag {
-  <li>
-    <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
-  </li>
+  <li><a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a></li>
 : }
 </ul>
 : } else {
@@ -35,9 +31,7 @@ None
 :if $tags.size() > 0 {
 <ul class="tag-list user-list">
 : for $users -> $user {
-  <li>
-    <a href="/tracker/user/<: $user.id :>"><: $user.username :></a>
-  </li>
+  <li><a href="/tracker/user/<: $user.id :>"><: $user.username :></a></li>
 : }
 </ul>
 : } else {
@@ -46,9 +40,17 @@ None
 
 
 <h3>Recent uploads</h3>
+: if $uploads.size() > 0 {
 : include "upload-list.tx" {uploads => $uploads}
+: } else {
+None
+: }
 
 <h3>Recent downloads</h3>
+: if $downloads.size() > 0 {
 : include "upload-list.tx" {uploads => $downloads}
+: } else {
+None
+: }
 
 : }
