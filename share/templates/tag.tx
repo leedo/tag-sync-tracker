@@ -1,5 +1,21 @@
 : cascade common
 : override body -> {
+<div id="follow-tag">
+<span id="follower-count">
+<strong><: $followers :></strong> Follow<: if $followers > 1 { :>s<: } :>
+</span>
+: if $following {
+<form action="/tracker/api/my/tag/<: $tag.slug :>" method="DELETE" class="api-form" data-partial="follow-tag" style="display:inline">
+<input type="submit" value="Unfollow">
+</form>
+: } else {
+<form action="/tracker/api/my/tags" method="POST" class="api-form" data-partial="follow-tag" style="display:inline">
+<input type="hidden" name="tag" value="<: $tag.slug :>">
+<input type="submit" value="Follow">
+</form>
+: }
+</div>
+
 <h2>Tag: <: $tag :></h2>
 
 <h3>Recent uploads</h3>

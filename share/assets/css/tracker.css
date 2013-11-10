@@ -291,6 +291,7 @@ ul.file-downloads a.down {
   border-bottom-right-radius: 4px;
 }
 
+#follow-tag,
 #follow-user {
   float: right;
 }

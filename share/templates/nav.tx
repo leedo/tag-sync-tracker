@@ -1,16 +1,13 @@
 <ul id="nav">
   <li class="title">Tag-sync tracker</li>
   <li>
-    <a href="/tracker/my-uploads">Suggestions</a>
-  </li>
-  <li>
     <a href="/tracker/uploads">All uploads</a>
   </li>
   <li>
-    <a href="/tracker/upload">New upload</a>
+    <a href="/tracker/my-subscriptions">Suggested</a>
   </li>
   <li>
-    <a href="/tracker/my-subscriptions">My tags and users</a>
+    <a href="/tracker/upload">New upload</a>
   </li>
   <li>
     <a href="/tracker/servers">All servers</a>
@@ -18,4 +15,5 @@
   <li>
     <a href="/tracker/my-servers">My servers</a>
   </li>
+  <li style="float:right;margin-top:2px"><a href="/" style="font-weight:normal;font-size:0.8em;">back to forum ↩</a></li>
 </ul>

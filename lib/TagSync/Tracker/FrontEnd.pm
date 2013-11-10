@@ -344,7 +344,63 @@ get "/servers" => sub {
   $self->render('server-list', {servers => \@servers});
 };
 
-get "/my-uploads" => sub {
+get "/my-subscriptions" => sub {
+  my ($self, $req) = @_;
+  my @users, @tags;
+  $self->db->run(sub {
+    my $tags = $_->prepare(q{
+      SELECT t.id, t.slug
+      FROM tag_subscription AS ts
+      INNER JOIN tag AS t
+        ON t.id = ts.tag_id
+      WHERE ts.subscriber_id = ?
+        AND ts.type = "user"
+    });
+    my $users = $_->prepare(q{
+      SELECT us.user_id
+      FROM user_subscription AS us
+      WHERE us.subscriber_id = ?
+        AND us.type = "user"
+    });
+    $tags->execute($req->id);
+    $users->execute($req->id);
+    my @user_ids = map {$_->[0]} @{$users->fetchall_arrayref};
+    @users = @{$self->auth->identify_users(@user_ids)};
+    @tags = @{$tags->fetchall_arrayref({})};
+  });
+  $self->render("my-subscriptions", {
+    users => \@users,
+    tags => \@tags,
+    uploads => $self->my_uploads($req),
+  });
+};
+
+get "/tags.json" => sub {
+  my ($self, $req) = @_;
+  my @tags;
+  $self->db->run(sub {
+    my $sth = $_->prepare(q{SELECT id,slug FROM tag});
+    $sth->execute;
+    while (my $row = $sth->fetchrow_hashref) {
+      push @tags, $row->{slug};
+    }
+  });
+  api_response \@tags;
+};
+
+get "/users.json" => sub {
+  my ($self, $req) = @_;
+  die "query is required" unless defined $req->parameters->{q};
+  my @users = $self->auth->search_users($req->parameters->{q});
+  api_response \@users;
+};
+
+get "" => sub {
+  my ($self, $req) = @_;
+  [301, ["Location", "/tracker/uploads"], ["moved"]];
+};
+
+sub my_uploads {
   my ($self, $req) = @_;
   my @uploads;
 
@@ -391,62 +447,7 @@ get "/my-uploads" => sub {
     }
   });
 
-  $self->render("uploads", {
-    uploads => \@uploads,
-    title => "Suggestions",
-  });
-};
-
-get "/my-subscriptions" => sub {
-  my ($self, $req) = @_;
-  my @users, @tags;
-  $self->db->run(sub {
-    my $tags = $_->prepare(q{
-      SELECT t.id, t.slug
-      FROM tag_subscription AS ts
-      INNER JOIN tag AS t
-        ON t.id = ts.tag_id
-      WHERE ts.subscriber_id = ?
-        AND ts.type = "user"
-    });
-    my $users = $_->prepare(q{
-      SELECT us.user_id
-      FROM user_subscription AS us
-      WHERE us.subscriber_id = ?
-        AND us.type = "user"
-    });
-    $tags->execute($req->id);
-    $users->execute($req->id);
-    my @user_ids = map {$_->[0]} @{$users->fetchall_arrayref};
-    @users = @{$self->auth->identify_users(@user_ids)};
-    @tags = @{$tags->fetchall_arrayref({})};
-  });
-  $self->render("my-subscriptions", {users => \@users, tags => \@tags});
-};
-
-get "/tags.json" => sub {
-  my ($self, $req) = @_;
-  my @tags;
-  $self->db->run(sub {
-    my $sth = $_->prepare(q{SELECT id,slug FROM tag});
-    $sth->execute;
-    while (my $row = $sth->fetchrow_hashref) {
-      push @tags, $row->{slug};
-    }
-  });
-  api_response \@tags;
-};
-
-get "/users.json" => sub {
-  my ($self, $req) = @_;
-  die "query is required" unless defined $req->parameters->{q};
-  my @users = $self->auth->search_users($req->parameters->{q});
-  api_response \@users;
-};
-
-get "" => sub {
-  my ($self, $req) = @_;
-  [301, ["Location", "/tracker/uploads"], ["moved"]];
-};
+  return \@uploads;
+}
 
 1;

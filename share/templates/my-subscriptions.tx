@@ -2,10 +2,6 @@
 : override id -> { "my-subscriptions" }
 : override body -> {
 <h2>My tags and users</h2>
-<p>
-These values will effect what appears in your
-<a href="/tracker/my-uploads">suggestions</a>.
-</p>
 
 <div>
 <div class="field">
@@ -50,5 +46,8 @@ These values will effect what appears in your
   </div>
 </div>
 </div>
+
+<h3>Recent matching uploads</h3>
+: include "upload-list.tx" {uploads => $uploads}
 
 : }
