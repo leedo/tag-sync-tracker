@@ -16,6 +16,8 @@ ul#nav li.title {
   color: #fff;
   background: #ccc;
   padding: 5px 10px;
+  border-right: none;
+  text-shadow: -1px -1px 1px rgba(0,0,0,0.25), 1px 1px 1px rgba(255,255,255,0.25);
 }
 ul#nav {
   list-style: none;
@@ -300,17 +302,26 @@ ul.file-downloads a.down {
 }
 h2 {
   margin-top: 0;
+  margin-bottom: 10px;
   border-bottom: 3px solid #eee;
 }
 h3 {
   border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+  margin-top: 20px;
 }
 h2 a {
   text-decoration: none;
 }
 #follower-count {
-  padding-right: 10px;
-  border-right: 1px solid #eee;
-  margin-right: 10px;
-  font-size: 12px;
+  padding: 2px 10px;
+  margin-right: 5px;
+  font-size: 11px;
+  text-align: center;
+  line-height: 11px;
+  color: #fff;
+  text-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+  background: #aaa;
+  border-radius: 10px;
+  box-shadow: inset 0px 1px 3px rgba(0,0,0,0.5);
 }
