@@ -2,15 +2,15 @@
 : override body -> {
 <div id="follow-tag">
 <span id="follower-count">
-<strong><: $followers :></strong> Follow<: if $followers > 1 { :>s<: } :>
+<strong><: $followers :></strong> follower<: if $followers != 1 { :>s<: } :>
 </span>
 : if $following {
-<form action="/tracker/api/my/tag/<: $tag.slug :>" method="DELETE" class="api-form" data-partial="follow-tag" style="display:inline">
+<form action="/tracker/api/my/tag/<: $tag :>" method="DELETE" class="api-form" data-partial="follow-tag" style="display:inline">
 <input type="submit" value="Unfollow">
 </form>
 : } else {
 <form action="/tracker/api/my/tags" method="POST" class="api-form" data-partial="follow-tag" style="display:inline">
-<input type="hidden" name="tag" value="<: $tag.slug :>">
+<input type="hidden" name="tag" value="<: $tag :>">
 <input type="submit" value="Follow">
 </form>
 : }

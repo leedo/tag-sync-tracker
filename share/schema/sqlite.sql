@@ -7,6 +7,7 @@ CREATE TABLE upload (
   hash TEXT UNIQUE,
   info TEXT,
   quality TEXT,
+  image_url TEXT,
   server INTEGER NOT NULL,
   filename TEXT NOT NULL,
   upload_date INTEGER NOT NULL

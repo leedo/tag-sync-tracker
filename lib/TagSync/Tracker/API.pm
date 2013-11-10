@@ -125,11 +125,11 @@ post '/upload' => sub {
       sha1_hex(join "", $token, @{$p}{qw{size hash}}) eq $p->{sig};
 
     my $sth = $_->prepare(q{
-      INSERT INTO upload (user_id, artist, title, size, hash, info, quality, server, filename, upload_date)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO upload (user_id, artist, title, size, hash, info, quality, server, filename, image_url, upload_date)
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     });
 
-    $sth->execute($req->id, @{$p}{qw{artist title size hash info quality server filename}}, time);
+    $sth->execute($req->id, @{$p}{qw{artist title size hash info quality server filename image_url}}, time);
     $upload_id = $_->last_insert_id("", "", "", "");
 
     die "failed to generate upload id" unless defined $upload_id;

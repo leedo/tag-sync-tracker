@@ -73,7 +73,6 @@ body {
 }
 .field {
   padding: 0;
-  clear: both;
   background: #fff;
 }
 .field:nth-child(odd) {
@@ -324,4 +323,15 @@ h2 a {
   background: #aaa;
   border-radius: 10px;
   box-shadow: inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+.upload-image {
+  float: right;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  background: #eee;
+}
+.upload-image img {
+  display: block;
+  max-width: 250px;
+  max-height: 250px;
 }

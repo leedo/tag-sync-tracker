@@ -74,6 +74,15 @@
 
 <div class="field">
   <div class="field-label">
+    <label for="image_url">Image URL</label>
+  </div>
+  <div class="field-value">
+    <input type="text" name="image_url" id="image_url">
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
     <label for="info">Info</label>
   </div>
   <div class="field-value">

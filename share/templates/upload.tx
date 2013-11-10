@@ -7,6 +7,12 @@
 
 <div>
 
+:if $upload.image_url != nil {
+<div class="upload-image">
+  <img src="<: $upload.image_url :>">
+</div>
+: }
+
 <div class="field">
   <div class="field-label">
     Artist
@@ -21,7 +27,11 @@
     Album
   </div>
   <div class="field-value">
+    <: if $embed { :>
+    <a href="/tracker/upload/<: $upload.id :>" target="_top"><: $upload.title :></a>
+    <: } else { :>
     <: $upload.title :>
+    <: } :>
   </div>
 </div>
 
@@ -40,7 +50,7 @@
   </div>
   <div class="field-value">
     <ul class="tag-list user-list">
-      <li><a href="/tracker/user/<: $upload.user.id :>"<: if $embed { ' target="_top"' } :>><: $upload.user.username :></a></li>
+      <li><a href="/tracker/user/<: $upload.user.id :>"<: if $embed { :> target="_top"<: } :>><: $upload.user.username :></a></li>
     </ul>
   </div>
 </div>
@@ -53,7 +63,7 @@
     <ul class="tag-list">
     <: for $upload.tags -> $tag { :>
       <li>
-        <a href="/tracker/tag/<: $tag.slug :>"<: if $embed { ' target="_top"' } :>><: $tag.slug :></a>
+        <a href="/tracker/tag/<: $tag.slug :>"<: if $embed { :> target="_top"<: } :>><: $tag.slug :></a>
         <: if $tag.user_id == $user_id { :>
         <form method="DELETE" action="/tracker/api/upload/<: $upload.id :>/tag/<: $tag.slug :>" class="api-form" data-partial="upload-<: $upload.id :>-tags">
           <input type="submit" value="x">

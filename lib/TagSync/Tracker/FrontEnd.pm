@@ -273,7 +273,7 @@ get qr{/user/(\d+)} => sub {
 
 get qr{/tag/([^/]+)} => sub {
   my ($self, $req, $slug) = @_;
-  my @uploads;
+  my (@uploads, $followers, $following);
 
   $self->db->run(sub {
     my $tags = $_->prepare(q{
@@ -301,10 +301,30 @@ get qr{/tag/([^/]+)} => sub {
       $upload->{user} = $self->auth->identify_users($upload->{user_id})->[0];
       push @uploads, $upload;
     }
+
+    ($following) = $_->selectrow_array(q{
+      SELECT 1 
+      FROM tag_subscription AS ts
+      INNER JOIN tag AS t
+        ON t.id = ts.tag_id
+      WHERE ts.subscriber_id = ?
+      AND ts.type = "user"
+      AND t.slug = ?
+    }, undef, $req->id, $slug);
+
+    ($followers) = $_->selectrow_array(q{
+      SELECT COUNT(*)
+      FROM tag_subscription AS ts
+      INNER JOIN tag AS t
+        ON t.id = ts.tag_id
+      WHERE t.slug = ?
+    }, undef, $slug);
   });
 
   $self->render("tag", {
     uploads => \@uploads,
+    following => $following,
+    followers => ($followers || 0),
     tag => $slug,
   });
 };
