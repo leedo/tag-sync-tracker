@@ -1,5 +1,5 @@
 <ul id="nav">
-  <li class="title">Tag-sync tracker</li>
+  <li class="title"><a href="/">Tag-sync tracker</a></li>
   <li>
     <a href="/tracker/uploads">All uploads</a>
   </li>

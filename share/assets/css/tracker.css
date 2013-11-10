@@ -13,30 +13,37 @@ body {
   margin: 0;
 }
 ul#nav li.title {
-  color: #fff;
-  background: #ccc;
+  background: #BE3734;
   padding: 5px 10px;
   border-right: none;
   text-shadow: -1px -1px 1px rgba(0,0,0,0.25), 1px 1px 1px rgba(255,255,255,0.25);
+}
+ul#nav li.title a {
+  color: #fff;
+  font-weight: normal;
+}
+ul#nav li.title a:hover {
+  color: #fff;
 }
 ul#nav {
   list-style: none;
   margin: 0;
   padding: 0;
-  background: #eee;
+  background: #111;
 }
 ul#nav li {
   display: inline-block;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #333;
   padding: 5px 10px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 ul#nav li a {
   text-decoration: none;
-  font-weight: bold;
-  color: #888;
+  color: #ddd;
 }
 ul#nav li a:hover {
-  color: #666;
+  color: #fff;
 }
 ul#nav li:last-child {
   border-right: none;

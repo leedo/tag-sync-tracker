@@ -1,7 +1,7 @@
 : cascade common
 : override id -> { "my-subscriptions" }
 : override body -> {
-<h2>My tags and users</h2>
+<h2>Suggested uploads</h2>
 
 <div>
 <div class="field">
