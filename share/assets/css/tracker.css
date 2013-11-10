@@ -12,9 +12,14 @@ span.status.up:after {
 body {
   margin: 0;
 }
+a {
+  color: #BE3734;
+}
+a:visited {
+  color: #952928;
+}
 ul#nav li.title {
   background: #BE3734;
-  padding: 5px 10px;
   border-right: none;
   text-shadow: -1px -1px 1px rgba(0,0,0,0.25), 1px 1px 1px rgba(255,255,255,0.25);
 }
@@ -30,13 +35,13 @@ ul#nav {
   margin: 0;
   padding: 0;
   background: #111;
+  border-bottom: 1px solid #000;
 }
 ul#nav li {
   display: inline-block;
   border-right: 1px solid #333;
-  padding: 5px 10px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  padding: 7px 10px 4px 10px;
+  border-bottom-right-radius: 2px;
 }
 ul#nav li a {
   text-decoration: none;
@@ -81,6 +86,7 @@ body {
 .field {
   padding: 0;
   background: #fff;
+  clear: left;
 }
 .field:nth-child(odd) {
   background: #efefef;
@@ -282,6 +288,7 @@ ul.file-downloads a.down {
   color: #333;
   padding-left: 2px;
 }
+/*
 .field:first-child,
 .table-list tr:first-child td:first-child {
   border-top-left-radius: 4px;
@@ -298,7 +305,7 @@ ul.file-downloads a.down {
 .table-list tr:last-child td:last-child {
   border-bottom-right-radius: 4px;
 }
-
+*/
 #follow-tag,
 #follow-user {
   float: right;
@@ -307,7 +314,7 @@ ul.file-downloads a.down {
   padding: 10px;
 }
 h2 {
-  margin-top: 0;
+  margin-top: 5px;
   margin-bottom: 10px;
   border-bottom: 3px solid #eee;
 }
@@ -333,12 +340,13 @@ h2 a {
 }
 .upload-image {
   float: right;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  background: #eee;
+  padding: 6px;
+  background: #ccc;
+  box-shadow: inset 0px 1px 3px rgba(0,0,0,0.5);
 }
 .upload-image img {
   display: block;
   max-width: 250px;
   max-height: 250px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }

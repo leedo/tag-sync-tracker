@@ -2,7 +2,7 @@
 : override id -> { "upload" }
 : override body -> {
 : if !$embed {
-<h2><: $upload.artist :> - <: $upload.title :></h2>
+<h2><: $upload.artist :> &ndash; <: $upload.title :></h2>
 : }
 
 <div>

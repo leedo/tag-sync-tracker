@@ -55,7 +55,7 @@ sub render {
   my $html = encode "utf8", $self->template->render("$page.tx", $vars);
   return [
     200,
-    ["Content-Type", "text/html"],
+    ["Content-Type", "text/html; charset=utf-8"],
     [$html],
   ];
 }

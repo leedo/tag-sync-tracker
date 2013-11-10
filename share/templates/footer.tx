@@ -1,4 +1,4 @@
-    <p style="text-align:right;font-size:10px">Found a bug? <a href="https://github.com/leedo/tag-sync-tracker/issues">Report it here</a>.</p>
+    <p style="text-align:right;font-size:10px;margin-right:10px">Found a bug? <a href="https://github.com/leedo/tag-sync-tracker/issues">Report it here</a>.</p>
     <script type="text/javascript" src="/tracker/assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="/tracker/assets/js/typeahead.min.js"></script>
     <script type="text/javascript" src="/tracker/assets/js/tracker.js"></script>

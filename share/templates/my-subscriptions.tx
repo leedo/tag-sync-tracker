@@ -4,6 +4,9 @@
 <h2>Suggested uploads</h2>
 
 <div>
+<table cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size:14px">
+<tr>
+<td width="50%">
 <div class="field">
   <div class="field-label">
     Tags you follow
@@ -24,7 +27,8 @@
     </ul>
   </div>
 </div>
-
+</td>
+<td width="50%">
 <div class="field">
   <div class="field-label">
     Users you follow
@@ -45,6 +49,9 @@
     </ul>
   </div>
 </div>
+</td>
+</tr>
+</table>
 </div>
 
 <h3>Recent matching uploads</h3>
