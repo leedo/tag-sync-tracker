@@ -9,7 +9,7 @@
 <div>
 <div class="field">
   <div class="field-label">
-    <label for="file">Upload</label>
+    <label for="file">Archive</label>
   </div>
   <div class="field-value">
     <input type="file" name="file" id="file">

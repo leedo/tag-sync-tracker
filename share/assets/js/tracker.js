@@ -1,5 +1,14 @@
 var tracker = {};
 
+tracker.resize_parent = function() {
+  if (window.parent !== window && "querySelector" in window.parent.document) {
+    var iframe = window.parent.document.querySelector('iframe[src="' + window.location.pathname + '"]');
+    if (iframe && "setAttribute" in iframe) {
+      iframe.setAttribute("height", $(window.document).outerHeight());
+    }
+  }
+};
+
 tracker.update_partial = function(id) {
   $.ajax({
     type: "GET",
@@ -10,6 +19,7 @@ tracker.update_partial = function(id) {
       var replacement = container.find('#' + id).remove();
       $('#' + id).replaceWith(replacement);
       container.remove();
+      tracker.resize_parent();
       tracker.setup_events($('#' + id));
     }
   });
@@ -260,6 +270,7 @@ tracker.setup_events = function(root) {
           link.attr('data-server-id', server.id);
           link.attr('data-upload-id', id);
           container.append($('<li/>').append(link));
+          tracker.resize_parent();
           $.ajax({
             type: "GET",
             url: server.url + "/download/" + hash,
@@ -289,5 +300,6 @@ tracker.setup_events = function(root) {
 
 $(document).ready(function() {
   tracker.setup_events($(document));
+  tracker.resize_parent();
 });
 
