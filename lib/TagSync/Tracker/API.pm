@@ -111,7 +111,7 @@ post '/upload' => sub {
   my $p = $req->parameters;
   my $upload_id;
 
-  foreach (qw{hash sig tags title artist size quality info filename}) {
+  foreach (qw{hash sig tags title artist size quality info}) {
     die "$_ is required" unless defined $p->{$_} and $p->{$_} ne "";
   }
 
@@ -191,7 +191,7 @@ get qr{/upload/([^/]+)/servers} => sub {
     my $body = encode_json {
       time => time,
       size => $upload->{size},
-      filename => $upload->{filename},
+      filename => $upload->{filename} || "$upload->{artist} - $upload->{title} [$upload->{quality}]",
     }; 
 
     my $sign = sub {

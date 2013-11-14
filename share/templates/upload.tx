@@ -35,6 +35,7 @@
   </div>
 </div>
 
+: if $upload.filename != "" {
 <div class="field">
   <div class="field-label">
     Filename
@@ -43,6 +44,7 @@
     <: $upload.filename :>
   </div>
 </div>
+: }
 
 <div class="field">
   <div class="field-label">
@@ -128,7 +130,7 @@
     Info
   </div>
   <div class="field-value info">
-    <: $upload.info :>
+    <pre style="margin:0"><: $upload.info :></pre>
   </div>
 </div>
 

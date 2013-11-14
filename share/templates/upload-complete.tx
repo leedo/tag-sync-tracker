@@ -3,6 +3,8 @@
 <h2>Album info</h2>
 
 <form action="/tracker/api/upload" method="post" id="upload-complete">
+
+: if $filename != "" {
 <div class="field">
   <div class="field-label"><label>Filename</label></div>
   <div class="field-value">
@@ -10,7 +12,9 @@
     <input type="hidden" name="filename" value="<: $filename :>">
   </div>
 </div>
-
+: } else {
+<input type="hidden" name="filename" value="">
+: }
 
 <div class="field">
   <div class="field-label"><label>Hash</label></div>
@@ -86,7 +90,7 @@
     <label for="info">Info</label>
   </div>
   <div class="field-value">
-    <textarea name="info" id="info"></textarea>
+    <textarea name="info" id="info"><: $info :></textarea>
   </div>
 </div>
 
