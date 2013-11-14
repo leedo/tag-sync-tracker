@@ -7,7 +7,7 @@
 
 <div>
 
-:if $upload.image_url != nil {
+:if $upload.image_url != "" {
 <div class="upload-image">
   <img src="<: $upload.image_url :>">
 </div>

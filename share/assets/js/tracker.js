@@ -7,7 +7,7 @@ tracker.resize_parent = function() {
     var iframe = doc.querySelector('iframe[src="' + path + '"]');
 
     if (iframe && "setAttribute" in iframe) {
-      var height = $(".container").outerHeight();
+      var height = $(".container").outerHeight() + 10;
       iframe.setAttribute("height", height);
     }
   }
