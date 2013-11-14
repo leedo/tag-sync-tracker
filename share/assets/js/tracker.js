@@ -2,9 +2,13 @@ var tracker = {};
 
 tracker.resize_parent = function() {
   if (window.parent !== window && "querySelector" in window.parent.document) {
-    var iframe = window.parent.document.querySelector('iframe[src="' + window.location.pathname + '"]');
+    var doc = window.parent.document;
+    var path = window.location.pathname;
+    var iframe = doc.querySelector('iframe[src="' + path + '"]');
+
     if (iframe && "setAttribute" in iframe) {
-      iframe.setAttribute("height", $(window.document).outerHeight());
+      var height = $(".container").outerHeight();
+      iframe.setAttribute("height", height);
     }
   }
 };

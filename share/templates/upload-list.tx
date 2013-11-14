@@ -1,3 +1,4 @@
+: if $uploads.size() {
 <table id="uploads" class="table-list" cellspacing="0">
   <thead>
     <tr>
@@ -36,4 +37,6 @@
 : }
   </tbody>
 </table>
-
+: } else {
+None
+: }

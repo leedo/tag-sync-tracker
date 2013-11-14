@@ -1,7 +1,7 @@
 <ul id="nav">
   <li class="title"><a href="/tracker/">Tag-sync tracker</a></li>
   <li>
-    <a href="/tracker/uploads">All uploads</a>
+    <a href="/tracker/uploads">Uploads</a>
   </li>
   <li>
     <a href="/tracker/my-subscriptions">Suggested</a>
@@ -15,5 +15,5 @@
   <li>
     <a href="/tracker/my-servers">My servers</a>
   </li>
-  <li style="float:right"><a href="/" style="font-weight:normal;font-size:0.8em;">back to the forum ↩</a></li>
+  <li class="nav-back"><a href="/">back to the forum ↩</a></li>
 </ul>

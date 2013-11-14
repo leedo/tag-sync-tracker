@@ -54,7 +54,7 @@
     <label for="tags">Tags</label>
   </div>
   <div class="field-value">
-    <textarea name="tags" id="tags"><: $tags :></textarea>
+    <textarea name="tags" id="tags"><: $tags.join(",") :></textarea>
   </div>
 </div>
 
@@ -67,7 +67,7 @@
       <option value="FLAC">FLAC</option>
       <option value="MP3 V0">MP3 V0</option>
       <option value="MP3 V2">MP3 V2</option>
-      <option value="MP3 V2">MP3 320</option>
+      <option value="MP3 320">MP3 320</option>
     </select>
   </div>
 </div>

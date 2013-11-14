@@ -40,17 +40,9 @@ None
 
 
 <h3>Recent uploads</h3>
-: if $uploads.size() > 0 {
 : include "upload-list.tx" {uploads => $uploads}
-: } else {
-None
-: }
 
 <h3>Recent downloads</h3>
-: if $downloads.size() > 0 {
 : include "upload-list.tx" {uploads => $downloads}
-: } else {
-None
-: }
 
 : }

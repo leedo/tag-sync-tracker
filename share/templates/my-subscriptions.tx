@@ -6,20 +6,20 @@
 <div>
 <table cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size:14px">
 <tr>
-<td width="50%">
+<td width="50%" valign="top">
 <div class="field">
   <div class="field-label">
     Tags you follow
   </div>
-  <div class="field-value" id="tags">
-    <form method="POST" action="/tracker/api/my/tags" class="api-form tag-input" data-partial="tags">
+  <div class="field-value" id="tags" style="background:#fff">
+    <form method="POST" action="/tracker/api/my/tags" class="api-form tag-input" data-partial="my-subscriptions">
       <input type="text" name="tag" placeholder="add tag">
     </form>
     <ul class="tag-list">
       <: for $tags -> $tag { :>
       <li>
         <a href="/tracker/tag/<: $tag.slug :>"><: $tag.slug :></a>
-        <form method="DELETE" action="/tracker/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="tags">
+        <form method="DELETE" action="/tracker/api/my/tag/<: $tag.slug :>" class="api-form" data-partial="my-subscriptions">
           <input type="submit" value="x">
         </form>
       </li>
@@ -28,20 +28,20 @@
   </div>
 </div>
 </td>
-<td width="50%">
+<td width="50%" valign="top">
 <div class="field">
   <div class="field-label">
     Users you follow
   </div>
-  <div class="field-value" id="users">
-    <form method="POST" action="/tracker/api/my/users" class="api-form user-input" data-partial="users">
+  <div class="field-value" id="users" style="background:#fff">
+    <form method="POST" action="/tracker/api/my/users" class="api-form user-input" data-partial="my-subscriptions">
       <input type="text" name="user" placeholder="add user">
     </form>
     <ul class="tag-list user-list">
       <: for $users -> $user { :>
       <li>
         <a href="/tracker/user/<: $user.id :>"><: $user.username :></a>
-        <form method="DELETE" action="/tracker/api/my/user/<: $user.id :>" class="api-form" data-partial="users">
+        <form method="DELETE" action="/tracker/api/my/user/<: $user.id :>" class="api-form" data-partial="my-subscriptions">
           <input type="submit" value="x">
         </form>
       </li>

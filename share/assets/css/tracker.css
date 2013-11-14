@@ -12,7 +12,7 @@ span.status.up:after {
 body {
   margin: 0;
 }
-a {
+a:link {
   color: #BE3734;
 }
 a:visited {
@@ -20,8 +20,11 @@ a:visited {
 }
 ul#nav li.title {
   background: #BE3734;
-  border-right: none;
   text-shadow: -1px -1px 1px rgba(0,0,0,0.25), 1px 1px 1px rgba(255,255,255,0.25);
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: inset -1px -1px 3px rgba(0,0,0,0.25);
+  margin-right: 10px;
 }
 ul#nav li.title a {
   color: #fff;
@@ -35,17 +38,25 @@ ul#nav {
   margin: 0;
   padding: 0;
   background: #111;
-  border-bottom: 1px solid #000;
+  overflow: hidden;
+}
+ul#nav li.nav-back {
+  float: right;
+  padding-right: 20px;
+}
+ul#nav li.nav-back a {
+  font-size: 0.8em;
+  font-weight: normal;
 }
 ul#nav li {
-  display: inline-block;
-  border-right: 1px solid #333;
-  padding: 7px 10px 4px 10px;
-  border-bottom-right-radius: 2px;
+  float: left;
+  padding: 7px 10px 5px 10px;
 }
 ul#nav li a {
   text-decoration: none;
   color: #ddd;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
 }
 ul#nav li a:hover {
   color: #fff;
@@ -75,6 +86,9 @@ body {
 .field-value {
   margin-left: 160px;
   padding: 10px;
+}
+.field-value.info {
+  line-height: 1.3em;
 }
 .field-value > input[type="text"] {
   width: 300px;
@@ -106,9 +120,6 @@ td.server-tags {
   padding: 0;
   list-style: none;
   overflow: hidden;
-}
-.upload-tags .tag-list {
-  float: left;
 }
 .tag-list li {
   display: block;
@@ -251,22 +262,35 @@ ul.file-downloads {
   padding: 0;
 }
 ul.file-downloads li {
-  border-bottom: 1px solid transparent;
+  display: inline-block;
+  margin-right: 5px;
 }
-ul.file-downloads li:last-child {
-  border-bottom: none;
+ul.file-downloads li:after {
+  content: ",";
+}
+ul.file-downloads li:last-child:after {
+  content: "";
 }
 ul.file-downloads li a {
-  display: block;
-  color: #000;
+  color: inherit;
   text-decoration: none;
-  padding: 5px;
+  padding: 0 5px;
 }
 ul.file-downloads a.up {
   background: #EBFEE5;
 }
+ul.file-downloads a.up:after {
+  content: "✓";
+  color: #4FA842;
+  padding-left: 2px;
+}
 ul.file-downloads a.down {
   background: #FFEEEA;
+}
+ul.file-downloads a.down:after {
+  content: "✗";
+  color: #BE3734;
+  padding-left: 2px;
 }
 .tt-dropdown-menu {
   background: #fff;
@@ -311,7 +335,7 @@ ul.file-downloads a.down {
   float: right;
 }
 .container {
-  padding: 10px;
+  padding: 10px 20px;
 }
 h2 {
   margin-top: 5px;
@@ -349,4 +373,7 @@ h2 a {
   max-width: 250px;
   max-height: 250px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+#new-upload {
+  max-width: 600px;
 }

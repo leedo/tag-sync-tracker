@@ -72,7 +72,7 @@
       </li>
     <: } :>
     </ul>
-    <form method="POST" action="/tracker/api/upload/<: $upload.id :>/tags" class="api-form tag-input" data-partial="upload-<: $upload.id :>-tags">
+    <form method="POST" action="/tracker/api/upload/<: $upload.id :>/tags" class="api-form tag-input" data-partial="upload-<: $upload.id :>-tags" style="margin-top:3px">
       <input type="text" name="tag" placeholder="add tag">
     </form>
   </div>
@@ -107,7 +107,16 @@
 
 <div class="field">
   <div class="field-label">
-    Downloads
+    Download links
+  </div>
+  <div class="field-value">
+    <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></ul>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    Fetches
   </div>
   <div class="field-value">
     <: $upload.fetches :>
@@ -118,7 +127,7 @@
   <div class="field-label">
     Info
   </div>
-  <div class="field-value">
+  <div class="field-value info">
     <: $upload.info :>
   </div>
 </div>
@@ -129,13 +138,11 @@
     Embed tag
   </div>
   <div class="field-value">
-    <span style="font-family:monospace">[tracker=<: $upload.id :>][/tracker]</span>
+    <code>[tracker=<: $upload.id :>][/tracker]</code>
   </div>
 </div>
 : }
 
 </div>
 
-<h3>Servers that should have this file <span style="font-size:12px;font-weight:normal">(click server name to download)</span></h3>
-<ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></ul>
 : }
