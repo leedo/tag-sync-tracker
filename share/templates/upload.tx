@@ -112,9 +112,22 @@
     Download links
   </div>
   <div class="field-value">
-    <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>"></ul>
+    <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>" data-stream="<: $streamer ? "on" : "off" :>"></ul>
   </div>
 </div>
+
+: if $streamer {
+<div class="field">
+  <div class="field-label">
+    Streamer
+  </div>
+  <div class="field-value">
+    <div id="streamer">
+      <ul id="streamer-tracks"></ul>
+    </div>
+  </div>
+</div>
+: }
 
 <div class="field">
   <div class="field-label">

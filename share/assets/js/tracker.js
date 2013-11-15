@@ -261,7 +261,9 @@ tracker.setup_events = function(root) {
   root.find('.file-downloads').each(function() {
     var container = $(this)
       , hash = container.attr('data-hash')
-      , id = container.attr('data-id');
+      , id = container.attr('data-id')
+      , stream = container.attr('data-stream') == "on"
+      , streaming = false;
 
     $.ajax({
       type: "GET",
@@ -269,19 +271,24 @@ tracker.setup_events = function(root) {
       dataType: "json",
       success: function(res) {
         $(res.servers).each(function(i, server) {
-          var url = server.url + "/download/" + hash + "?token=" + server.token;
-          var link = $('<a/>',{href: url, target: "_blank"}).html(server.name);
+          var url = server.url + "/download/" + hash + "?token=" + server.token
+            , link = $('<a/>',{href: url, target: "_blank"}).html(server.name);
+
           link.attr('data-server-id', server.id);
           link.attr('data-upload-id', id);
           container.append($('<li/>').append(link));
           tracker.resize_parent();
+
           $.ajax({
             type: "GET",
-            url: server.url + "/download/" + hash,
-            data: {token: server.token, exists: true},
+            url: url.replace("/download/", "/streamer/"),
             dataType: "json",
             success: function(res) {
               link.addClass(res.success ? "up" : "down");
+              if (res.success && stream && !streaming) {
+                streaming = true;
+                tracker.setup_player(res.tracks);
+              }
             }
           });
         });
@@ -301,6 +308,29 @@ tracker.setup_events = function(root) {
     });
   });
 }
+
+tracker.setup_player = function(tracks) {
+  var list = $('#streamer-tracks');
+  $(tracks).each(function(i,track) {
+    var a = $('<a/>', {"class": "audio", href: track.url});
+    list.append($('<li/>').append(a.html(track.name)));
+  });
+
+  var player = $('<audio/>', {
+    controls: "controls",
+    src: tracks[0].url,
+    id: 'streamer-player'
+  });
+
+  $('#streamer').prepend(player);
+
+  list.on("click", "a.audio", function(e) {
+    e.preventDefault();
+    player.get(0).pause();
+    player.get(0).src = $(this).attr('href');
+    player.get(0).play();
+  });
+};
 
 $(document).ready(function() {
   tracker.setup_events($(document));
