@@ -2,6 +2,8 @@
 : override body -> {
 <h2>New upload</h2>
 
+<p>Any file type will work, but zip files will eventually be able to work with the streamer.</p>
+
 <form id="new-upload" method="post" action="/tracker/api/upload/url" enctype="multipart/form-data">
 <input id="token" type="hidden" name="token" value="">
 <input id="return" type="hidden" name="return" value="/upload">

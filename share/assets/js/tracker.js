@@ -272,7 +272,13 @@ tracker.setup_events = function(root) {
       success: function(res) {
         $(res.servers).each(function(i, server) {
           var url = server.url + "/download/" + hash + "?token=" + server.token
+            , ajax = url
             , link = $('<a/>',{href: url, target: "_blank"}).html(server.name);
+
+          if (stream)
+            ajax = ajax.replace("/download/", "/streamer/");
+          else
+            ajax += "&exists=true";
 
           link.attr('data-server-id', server.id);
           link.attr('data-upload-id', id);
@@ -281,7 +287,7 @@ tracker.setup_events = function(root) {
 
           $.ajax({
             type: "GET",
-            url: url.replace("/download/", "/streamer/"),
+            url: ajax,
             dataType: "json",
             success: function(res) {
               link.addClass(res.success ? "up" : "down");
