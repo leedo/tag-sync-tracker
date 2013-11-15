@@ -270,6 +270,7 @@ tracker.setup_events = function(root) {
       url: "/tracker/api/upload/" + id + "/servers",
       dataType: "json",
       success: function(res) {
+        res.servers.sort(function(){return Math.round(Math.random()) - 0.5;});
         $(res.servers).each(function(i, server) {
           var url = server.url + "/download/" + hash + "?token=" + server.token
             , ajax = url
