@@ -377,3 +377,48 @@ h2 a {
 #new-upload {
   max-width: 600px;
 }
+#streamer audio {
+  width: 300px;
+  height: 30px;
+}
+ul#streamer-tracks {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  max-height: 100px;
+  overflow: auto;
+  background: #ccc;
+  box-shadow: inset 0px 1px 3px rgba(0,0,0,0.5);
+  margin-top: 5px;
+}
+#streamer {
+  width: 300px;
+}
+ul#streamer-tracks a.audio {
+  text-decoration: none;
+  display: block;
+  border-top: none;
+  padding: 2px 4px;
+  font-size: 11px;
+  color: #333;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+ul#streamer-tracks li:last-child a.audio {
+  border-bottom: none;
+}
+ul#streamer-tracks a.audio:hover {
+  color: #000;
+}
+ul#streamer-tracks a.audio.selected {
+  background: #fff;
+  color: #000;
+  border-color: #ccc;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+ul#streamer-tracks li:first-child a.audio.selected {
+  border-top: 1px solid #ccc;
+}
+ul#streamer-tracks li:last-child a.audio.selected {
+  border-bottom: 1px solid #ccc;
+}

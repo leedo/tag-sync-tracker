@@ -321,6 +321,7 @@ tracker.setup_player = function(tracks) {
     var a = $('<a/>', {"class": "audio", href: track.url});
     list.append($('<li/>').append(a.html(track.name)));
   });
+  list.find("li:first-child a").addClass("selected");
 
   var player = $('<audio/>', {
     controls: "controls",
@@ -332,10 +333,14 @@ tracker.setup_player = function(tracks) {
 
   list.on("click", "a.audio", function(e) {
     e.preventDefault();
+    $(this).parents("ul").find("a.selected").removeClass("selected");
+    $(this).addClass("selected");
     player.get(0).pause();
     player.get(0).src = $(this).attr('href');
     player.get(0).play();
   });
+
+  tracker.resize_parent();
 };
 
 $(document).ready(function() {
