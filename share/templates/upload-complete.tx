@@ -90,7 +90,7 @@
     <label for="info">Info</label>
   </div>
   <div class="field-value">
-    <textarea name="info" id="info"><: $info :></textarea>
+    <textarea name="info" id="info"></textarea>
   </div>
 </div>
 
