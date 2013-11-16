@@ -416,6 +416,12 @@ ul#streamer-tracks a.audio.selected {
   border-color: #ccc;
   box-shadow: 0 1px 3px rgba(0,0,0,0.25);
 }
+ul#streamer-tracks li:first-child a.audio {
+  border-top: 1px solid transparent;
+}
+ul#streamer-tracks li:last-child a.audio {
+  border-bottom: 1px solid transparent;
+}
 ul#streamer-tracks li:first-child a.audio.selected {
   border-top: 1px solid #ccc;
 }
