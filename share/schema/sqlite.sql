@@ -10,6 +10,7 @@ CREATE TABLE upload (
   image_url TEXT,
   server INTEGER NOT NULL,
   filename TEXT NOT NULL,
+  streaming INTEGER NOT NULL DEFAULT 0,
   upload_date INTEGER NOT NULL
 );
 

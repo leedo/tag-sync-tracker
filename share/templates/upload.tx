@@ -35,7 +35,7 @@
   </div>
 </div>
 
-: if $upload.filename != "" {
+: if !$upload.streaming {
 <div class="field">
   <div class="field-label">
     Filename
@@ -112,11 +112,11 @@
     Download links
   </div>
   <div class="field-value">
-    <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>" data-stream="<: $streamer ? "on" : "off" :>"></ul>
+    <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>" data-stream="<: $upload.streaming ? "on" : "off" :>"></ul>
   </div>
 </div>
 
-: if $streamer {
+: if $upload.streaming {
 <div class="field">
   <div class="field-label">
     Streamer

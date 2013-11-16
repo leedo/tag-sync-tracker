@@ -155,7 +155,6 @@ get qr{/upload/(\d+)(/embed)?} => sub {
   $self->render('upload', {
     upload => $upload,
     user_id => $req->id,
-    streamer => $upload->{filename} eq "",
     embed => defined $embed
   });
 };

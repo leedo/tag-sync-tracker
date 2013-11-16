@@ -4,7 +4,6 @@
 
 <form action="/tracker/api/upload" method="post" id="upload-complete">
 
-: if $filename != "" {
 <div class="field">
   <div class="field-label"><label>Filename</label></div>
   <div class="field-value">
@@ -12,9 +11,14 @@
     <input type="hidden" name="filename" value="<: $filename :>">
   </div>
 </div>
-: } else {
-<input type="hidden" name="filename" value="">
-: }
+
+<div class="field">
+  <div class="field-label"><label>Streaming</label></div>
+  <div class="field-value">
+    <: $streaming ? "yes" : "no" :>
+    <input type="hidden" name="streaming" value="<: $streaming ? 1 : 0 :>">
+  </div>
+</div>
 
 <div class="field">
   <div class="field-label"><label>Hash</label></div>
