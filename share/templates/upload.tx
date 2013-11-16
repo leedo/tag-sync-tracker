@@ -13,27 +13,16 @@
 </div>
 : }
 
-<div class="field">
-  <div class="field-label">
-    Artist
-  </div>
-  <div class="field-value">
-    <: $upload.artist :>
-  </div>
-</div>
-
+: if $embed {
 <div class="field">
   <div class="field-label">
     Album
   </div>
   <div class="field-value">
-    <: if $embed { :>
-    <a href="/tracker/upload/<: $upload.id :>" target="_top"><: $upload.title :></a>
-    <: } else { :>
-    <: $upload.title :>
-    <: } :>
+    <a href="/tracker/upload/<: $upload.id :>" target="_top"><: $upload.artist :> &ndash; <: $upload.title :></a>
   </div>
 </div>
+: }
 
 : if !$upload.streaming {
 <div class="field">
@@ -89,15 +78,7 @@
   </div>
 </div>
 
-<div class="field">
-  <div class="field-label">
-    Size
-  </div>
-  <div class="field-value">
-    <: $upload.size | megabytes :><span class="filesize">MB</span>
-  </div>
-</div>
-
+: if !$embed {
 <div class="field">
   <div class="field-label">
     Upload date
@@ -106,6 +87,7 @@
     <span class="timestamp"><: $upload.upload_date :></span>
   </div>
 </div>
+: }
 
 <div class="field">
   <div class="field-label">
@@ -113,6 +95,7 @@
   </div>
   <div class="field-value">
     <ul class="file-downloads" data-id="<: $upload.id :>" data-hash="<: $upload.hash :>" data-stream="<: $upload.streaming ? "on" : "off" :>"></ul>
+    <: $upload.streaming ? "~" : "" :><: $upload.size | megabytes :><span class="filesize">MB</span>
   </div>
 </div>
 
@@ -125,6 +108,7 @@
     <div id="streamer">
       <ul id="streamer-tracks"></ul>
     </div>
+    <p class="field-note">Stream works for 10 min from page load. Please download if you want to listen to more.</p>
   </div>
 </div>
 : }

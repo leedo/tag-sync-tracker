@@ -188,10 +188,14 @@ get qr{/upload/([^/]+)/servers} => sub {
         AND us.user_id = ?
     });
 
+    $filename = $upload->{streaming} ?
+      "$upload->{artist} - $upload->{title} [$upload->{quality}]"
+      : $upload->{filename};
+
     my $body = encode_json {
       time => time,
       size => $upload->{size},
-      filename => $upload->{filename} || "$upload->{artist} - $upload->{title} [$upload->{quality}]",
+      filename => $filename,
     }; 
 
     my $sign = sub {

@@ -73,10 +73,13 @@
   </div>
   <div class="field-value">
     <select name="quality" id="quality">
-      <option value="FLAC">FLAC</option>
+      <option value="MP3">MP3</option>
       <option value="MP3 V0">MP3 V0</option>
       <option value="MP3 V2">MP3 V2</option>
       <option value="MP3 320">MP3 320</option>
+      <option value="AAC">AAC</option>
+      <option value="OGG">OGG</option>
+      <option value="FLAC">FLAC</option>
     </select>
   </div>
 </div>
