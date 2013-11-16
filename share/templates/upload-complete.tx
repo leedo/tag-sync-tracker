@@ -63,6 +63,7 @@
   </div>
   <div class="field-value">
     <textarea name="tags" id="tags"><: $tags.join(",") :></textarea>
+    <p class="field-note">Comma separated list.</p>
   </div>
 </div>
 
@@ -95,6 +96,7 @@
   </div>
   <div class="field-value">
     <textarea name="info" id="info"></textarea>
+    <p class="field-note">Some HTML allowed. Newlines converted to &lt;br&gt;.</p>
   </div>
 </div>
 

@@ -143,7 +143,7 @@
     Info
   </div>
   <div class="field-value info">
-    <pre style="margin:0"><: $upload.info :></pre>
+    <: $upload.info | raw :>
   </div>
 </div>
 

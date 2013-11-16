@@ -11,6 +11,7 @@ requires 'Digest::HMAC_SHA1';
 requires 'Starman';
 requires 'Server::Starter';
 requires 'Net::Server::SS::PreFork';
+requires 'HTML::Scrubber';
 
 on 'test' => sub {
 	requires 'Test::More';

@@ -7,6 +7,7 @@ use TagSync::Web;
 use TagSync::Tracker::Request::User;
 use Plack::Request;
 use Text::Xslate;
+use HTML::Scrubber;
 use URI::Escape;
 use MIME::Base64;
 use Encode;
@@ -151,6 +152,15 @@ get qr{/upload/(\d+)(/embed)?} => sub {
     ($upload->{fetches}) = $fetches->fetchrow_array;
     $upload;
   });
+
+  my $scrubber = HTML::Scrubber->new;
+  $scrubber->allow(qw{b i strong em u a p ul ol li dl dd img hr br});
+  $scrubber->rules({
+    a   => {href => qr{^(https?://|/)}, '*' => 0},
+    img => { src => 1, alt => 1, '*' => 0 }
+  });
+
+  $upload->{info} = $scrubber->scrub(join "<br>", split "\n", $upload->{info});
 
   $self->render('upload', {
     upload => $upload,
