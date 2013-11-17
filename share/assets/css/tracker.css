@@ -68,6 +68,9 @@ body {
   font-family: sans-serif;
   font-size: 14px;
 }
+.embed {
+  font: 13px Verdana, Arial, Helvetica, sans-serif
+}
 .field-note {
   font-size: 11px;
   font-style: italic;
@@ -81,12 +84,18 @@ body {
   min-height: 16px;
   text-align: right;
 }
+.embed .field-label {
+  padding: 6px 10px 6px 0;
+}
 .field-label {
   color: #999;
 }
 .field-value {
   margin-left: 160px;
   padding: 10px;
+}
+.embed .field-value {
+  padding: 6px 10px;
 }
 .field-value.info {
   line-height: 1.3em;
@@ -111,10 +120,6 @@ body {
 }
 .field:nth-child(odd) .field-value{
   background: #ddd;
-}
-td.server-users,
-td.server-tags {
-  width: 180px;
 }
 .tag-list {
   margin: 0;
@@ -206,6 +211,10 @@ form.tag-input input[type="text"]:focus {
   text-align: left;
   font-size: 14px;
   vertical-align: top;
+}
+.embed .table-list thead > tr > th,
+.embed .table-list tbody > tr > td {
+  font: 13px Verdana, Arial, Helvetica, sans-serif
 }
 span.token {
   font-family: monospace;
@@ -380,7 +389,7 @@ h2 a {
   max-width: 600px;
 }
 #streamer audio {
-  width: 300px;
+  width: 400px;
   height: 30px;
 }
 ul#streamer-tracks {
@@ -394,7 +403,7 @@ ul#streamer-tracks {
   margin-top: 5px;
 }
 #streamer {
-  width: 300px;
+  width: 400px;
 }
 ul#streamer-tracks a.audio {
   text-decoration: none;

@@ -19,6 +19,7 @@
     </div>
     <div class="field-value">
       <input type="text" name="url" id="url">
+      <p class="field-note">e.g. http://127.0.0.1:5001</p>
     </div>
   </div>
 
@@ -106,13 +107,13 @@
         </ul>
       </td>
 
-      <td title="Mirror everything?">
+      <td title="Mirror everything?" style="width:10px">
         <form method="POST" action="/tracker/api/my/server/<: $server.id :>" class="api-form mirror-everything" data-partial="my-server-list">
           <input type="checkbox" name="everything"<: $server.everything ? " checked" : "" :>>
         </form>
       </td>
 
-      <td class="actions">
+      <td class="actions" style="width:80px">
         <form method="DELETE" action="/tracker/api/my/server/<: $server.id :>" class="api-form confirm" data-partial="my-server-list">
           <input type="submit" value="Delete">
         </form>

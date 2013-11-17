@@ -5,11 +5,11 @@
 <h2><: $upload.artist :> &ndash; <: $upload.title :></h2>
 : }
 
-<div>
+<div<: if $embed { :> class="embed"<: } :>>
 
 :if $upload.image_url != "" {
 <div class="upload-image">
-  <img src="<: $upload.image_url :>">
+  <a href="<: $upload.image_url :>" target="_blank"><img src="<: $upload.image_url :>"></a>
 </div>
 : }
 
@@ -103,12 +103,12 @@
 <div class="field">
   <div class="field-label">
     Streamer
+    <p class="field-note">Works for 10 min. Please download to listen longer</p>
   </div>
   <div class="field-value">
     <div id="streamer">
       <ul id="streamer-tracks"></ul>
     </div>
-    <p class="field-note">Stream works for 10 min from page load. Please download if you want to listen to more.</p>
   </div>
 </div>
 : }

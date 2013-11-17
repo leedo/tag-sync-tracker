@@ -326,19 +326,34 @@ tracker.setup_player = function(tracks) {
 
   var player = $('<audio/>', {
     controls: "controls",
+    preload: "none",
     src: tracks[0].url,
     id: 'streamer-player'
+  });
+
+  player.on("error", function(e) {
+    $('#streamer').parents(".field").find(".field-note").css({color: "red"});
   });
 
   $('#streamer').prepend(player);
 
   list.on("click", "a.audio", function(e) {
     e.preventDefault();
-    $(this).parents("ul").find("a.selected").removeClass("selected");
-    $(this).addClass("selected");
-    player.get(0).pause();
-    player.get(0).src = $(this).attr('href');
-    player.get(0).play();
+    var link = $(this);
+    link.parents("ul").find("a.selected").removeClass("selected");
+    link.addClass("selected");
+    var replace = $('<audio/>', {
+      controls: "controls",
+      preload: "auto",
+      autoplay: "autoplay",
+      src: link.attr('href'),
+      id: 'streamer-player'
+    })
+    player.replaceWith(replace);
+    player = replace;
+    player.on("error", function(e) {
+      $('#streamer').parents(".field").find(".field-note").css({color: "red"});
+    });
   });
 
   tracker.resize_parent();
