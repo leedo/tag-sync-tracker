@@ -43,7 +43,7 @@
   <div class="field-label">
     <label for="artist">Artist</label>
   </div>
-  <div class="field-value">
+  <div class="field-value artist">
     <input type="text" name="artist" id="artist">
   </div>
 </div>

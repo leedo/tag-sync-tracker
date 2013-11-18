@@ -100,7 +100,7 @@ body {
 .field-value.info {
   line-height: 1.3em;
 }
-.field-value > input[type="text"] {
+.field-value input[type="text"] {
   width: 300px;
 }
 .field-value textarea {
@@ -302,6 +302,9 @@ ul.file-downloads a.down:after {
   content: "✗";
   color: #BE3734;
   padding-left: 2px;
+}
+.field-value.artist .tt-dropdown-menu {
+  width: 300px;
 }
 .tt-dropdown-menu {
   background: #fff;

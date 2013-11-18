@@ -425,6 +425,24 @@ get "/users.json" => sub {
   api_response \@users;
 };
 
+get "/artists.json" => sub {
+  my ($self, $req) = @_;
+  die "query is required" unless defined $req->parameters->{q};
+  my @artists;
+  $self->db->run(sub {
+    my $sth = $_->prepare(q{
+      SELECT DISTINCT(artist)
+      FROM upload
+      WHERE artist LIKE ?
+    });
+    $sth->execute($req->parameters->{q} . "%");
+    while ((my $artist) = $sth->fetchrow_array) {
+      push @artists, $artist;
+    }
+  });
+  api_response \@artists;
+};
+
 get "" => sub {
   my ($self, $req) = @_;
   [301, ["Location", "/tracker/uploads"], ["moved"]];

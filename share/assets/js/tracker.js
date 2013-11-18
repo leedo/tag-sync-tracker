@@ -111,6 +111,12 @@ tracker.setup_events = function(root) {
     limit: 10
   });
 
+  root.find('input#artist').typeahead({
+    name: "artists",
+    remote: "/tracker/artists.json?q=%QUERY",
+    limit: 10
+  });
+
   root.find('.tag-input input, .user-input input').on('keypress', function(e) {
     if (e.keyCode == 13) {
       $(this).parents("form").submit();
