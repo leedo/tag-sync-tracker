@@ -14,4 +14,5 @@ TODO items
 
  * discussion in tracker?
  * search
- 
+ * create artist and album tables
+ * "similar artists" table, and field for uploads 
