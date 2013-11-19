@@ -19,15 +19,16 @@ a:visited {
   color: #952928;
 }
 ul#nav li.title {
-  background: #BE3734;
+/*  background: #BE3734;
   text-shadow: -1px -1px 1px rgba(0,0,0,0.25), 1px 1px 1px rgba(255,255,255,0.25);
+  box-shadow: inset -1px -1px 3px rgba(0,0,0,0.25);
+  */
   padding-left: 20px;
   padding-right: 20px;
-  box-shadow: inset -1px -1px 3px rgba(0,0,0,0.25);
   margin-right: 10px;
 }
 ul#nav li.title a {
-  color: #fff;
+  /* color: #fff; */
   font-weight: normal;
 }
 ul#nav li.title a:hover {
@@ -88,7 +89,7 @@ body {
   padding: 6px 10px 6px 0;
 }
 .field-label {
-  color: #999;
+  color: #777;
 }
 .field-value {
   margin-left: 160px;
