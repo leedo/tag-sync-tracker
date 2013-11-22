@@ -443,3 +443,9 @@ ul#streamer-tracks li:first-child a.audio.selected {
 ul#streamer-tracks li:last-child a.audio.selected {
   border-bottom: 1px solid #ccc;
 }
+div.message {
+  background: #FFF8EB;
+  border: 1px solid #CDC8BE;
+  padding: 0 10px;
+  margin-bottom: 15px;
+}

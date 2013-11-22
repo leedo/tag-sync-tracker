@@ -1,6 +1,14 @@
 : cascade common
 : override id -> { "upload" }
 : override body -> {
+: if $complete {
+<div class="message">
+<p><strong>Upload complete!</strong></p>
+<p>Paste this tag into a forum post to share with others:</p>
+<pre>[tracker=<: $upload.id :>][/tracker]</pre>
+</div>
+: }
+
 : if !$embed {
 <h2><: $upload.artist :> &ndash; <: $upload.title :></h2>
 : }

@@ -78,7 +78,7 @@ tracker.setup_events = function(root) {
   root.find('#upload-complete').on('submit', function(e) {
     e.preventDefault();
     tracker.form_api_request($(this), function(res) {
-      window.location = "/tracker/upload/" + res.upload;
+      window.location = "/tracker/upload/" + res.upload + "?complete";
     });
   });
 
@@ -368,5 +368,10 @@ tracker.setup_player = function(tracks) {
 $(document).ready(function() {
   tracker.setup_events($(document));
   tracker.resize_parent();
+
+  // remove messages from URL, so copy & paste'd URL doesn't show the message
+  if (window.location.search.match(/\?complete/) || "replaceState" in window.history) {
+    window.history.replaceState({}, "name", window.location.toString().replace("?complete", ""));
+  }
 });
 
