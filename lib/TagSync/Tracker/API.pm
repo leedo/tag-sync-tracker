@@ -389,6 +389,7 @@ get '/my/downloads' => sub {
           AND ts.type = ?
         GROUP BY ut.upload_id
       )
+    ORDER BY id DESC
     LIMIT ?, ?
   };
 
@@ -402,7 +403,7 @@ get '/my/downloads' => sub {
         SELECT everything FROM server WHERE id = ?
       }, undef, $req->id);
       if ($everything) {
-        $query = q{SELECT * FROM upload LIMIT ?, ?};
+        $query = q{SELECT * FROM upload ORDER BY id DESC LIMIT ?, ?};
         @bind = ();
       }
     }

@@ -55,6 +55,6 @@
 </div>
 
 <h3>Recent matching uploads</h3>
-: include "upload-list.tx" {uploads => $uploads}
+: include "upload-list.tx" {uploads => $uploads, page => $page}
 
 : }

@@ -192,7 +192,11 @@ get "/uploads" => sub {
     }
   });
 
-  $self->render("uploads", {uploads => \@uploads, title => "All uploads"});
+  $self->render("uploads", {
+    uploads => \@uploads,
+    title => "All uploads",
+    page => $req->parameters->{page} || 1,
+  });
 };
 
 get qr{/user/(\d+)} => sub {
@@ -334,6 +338,7 @@ get qr{/tag/([^/]+)} => sub {
 
   $self->render("tag", {
     uploads => \@uploads,
+    page => $req->parameters->{page} || 1,
     following => $following,
     followers => ($followers || 0),
     tag => $slug,
@@ -403,6 +408,7 @@ get "/my-subscriptions" => sub {
     users => \@users,
     tags => \@tags,
     uploads => $self->my_uploads($req),
+    page => $req->parameters->{page} || 1,
   });
 };
 

@@ -37,6 +37,18 @@
 : }
   </tbody>
 </table>
+
+: if $page {
+<p class="pagination">
+: if $uploads.size() == 50 {
+<a class="older" href="?page=<: $page + 1 :>">…older</a>
+: }
+: if $page > 1 {
+<a class="newer" href="?page=<: $page - 1 :>">newer…</a>
+: }
+</p>
+: }
+
 : } else {
 None
 : }
