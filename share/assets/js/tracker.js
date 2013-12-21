@@ -276,10 +276,12 @@ tracker.setup_events = function(root) {
       url: "/tracker/api/upload/" + id + "/servers",
       dataType: "json",
       success: function(res) {
+        var streamers = [];
         res.servers.sort(function(){return Math.round(Math.random()) - 0.5;});
         $(res.servers).each(function(i, server) {
           var url = server.url + "/download/" + hash + "?token=" + server.token
             , ajax = url
+            , last = res.servers.length == i + 1
             , link = $('<a/>',{href: url, target: "_blank"}).html(server.name);
 
           if (stream)
@@ -298,9 +300,12 @@ tracker.setup_events = function(root) {
             dataType: "json",
             success: function(res) {
               link.addClass(res.success ? "up" : "down");
-              if (res.success && stream && !streaming) {
-                streaming = true;
-                tracker.setup_player(res.tracks);
+              if (res.success && stream) {
+                streamers.push(res.tracks);
+              }
+              if (last && stream && streamers.length) {
+                streamers.sort(function(){return Math.round(Math.random()) - 0.5;});
+                tracker.setup_player(streamers[0]);
               }
             }
           });
