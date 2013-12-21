@@ -330,36 +330,31 @@ tracker.setup_player = function(tracks) {
   });
   list.find("li:first-child a").addClass("selected");
 
-  var player = $('<audio/>', {
+  var audio = $('<audio/>', {
     controls: "controls",
     preload: "none",
     src: tracks[0].url,
+    type: "audio/mpeg",
     id: 'streamer-player'
   });
 
-  player.on("error", function(e) {
-    $('#streamer').parents(".field").find(".field-note").css({color: "red"});
-  });
 
-  $('#streamer').prepend(player);
+  $('#streamer').prepend(audio);
+  var player = new MediaElementPlayer(audio, {
+    error: function() {
+      $('#streamer').parents(".field").find(".field-note").css({color: "red"});
+    }
+  });
 
   list.on("click", "a.audio", function(e) {
     e.preventDefault();
     var link = $(this);
     link.parents("ul").find("a.selected").removeClass("selected");
     link.addClass("selected");
-    var replace = $('<audio/>', {
-      controls: "controls",
-      preload: "auto",
-      autoplay: "autoplay",
-      src: link.attr('href'),
-      id: 'streamer-player'
-    })
-    player.replaceWith(replace);
-    player = replace;
-    player.on("error", function(e) {
-      $('#streamer').parents(".field").find(".field-note").css({color: "red"});
-    });
+    player.pause();
+    player.setSrc(link.attr('href'));
+    player.load();
+    player.play();
   });
 
   tracker.resize_parent();

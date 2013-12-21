@@ -2,5 +2,6 @@
   <head>
     <title>Tag-sync tracker</title>
     <link type="text/css" href="/tracker/assets/css/tracker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/tracker/assets/mediaelement/mediaelementplayer.css" /></code>
   </head>
   <body>
