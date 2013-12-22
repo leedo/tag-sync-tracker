@@ -345,7 +345,16 @@ tracker.setup_player = function(tracks) {
 
 
   $('#streamer').prepend(audio);
+
   var player = new MediaElementPlayer(audio, {
+    success: function(mejs, dom) {
+      mejs.addEventListener('ended', function(e) {
+        var next = $('#streamer').find('a.selected').parents('li').next('li').find('a.audio');
+        if (next.length) {
+          next.trigger('click');
+        }
+      });
+    },
     error: function() {
       $('#streamer').parents(".field").find(".field-note").css({color: "red"});
     }

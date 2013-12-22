@@ -4,7 +4,7 @@
 : include "nav.tx"
 : }
 
-<div class="container" id="<: block id -> { } :>">
+<div class="container<: $embed ? " embed" : "" :>" id="<: block id -> { } :>">
 : block body -> { }
 
 <p style="text-align:right;font-size:10px">Found a bug? <a href="https://github.com/leedo/tag-sync-tracker/issues" target="_blank">Report it here</a>.</p>

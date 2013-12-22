@@ -13,7 +13,7 @@
 <h2><: $upload.artist :> &ndash; <: $upload.title :></h2>
 : }
 
-<div<: if $embed { :> class="embed"<: } :>>
+<div>
 
 :if $upload.image_url != "" {
 <div class="upload-image">

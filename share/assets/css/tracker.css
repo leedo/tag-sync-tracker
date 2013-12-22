@@ -40,6 +40,10 @@ ul#nav {
   padding: 0;
   background: #111;
   overflow: hidden;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
 }
 ul#nav li.nav-back {
   float: right;
@@ -350,6 +354,10 @@ ul.file-downloads a.down:after {
   float: right;
 }
 .container {
+  padding: 10px 20px;
+  padding-top: 2.4em;
+}
+.container.embed {
   padding: 10px 20px;
 }
 h2 {
