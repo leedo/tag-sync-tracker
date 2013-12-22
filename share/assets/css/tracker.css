@@ -463,6 +463,6 @@ p.pagination a:hover {
   background: #ddd;
 }
 
-.mejs-container {
-  overflow: hidden;
+.mejs-clear {
+  display: none;
 }
