@@ -382,5 +382,15 @@ $(document).ready(function() {
   if (window.location.search.match(/\?complete/) || "replaceState" in window.history) {
     window.history.replaceState({}, "name", window.location.toString().replace("?complete", ""));
   }
+  var dl = $('ul.file-downloads');
+  if (dl.length) {
+    setTimeout(function() {
+      dl.find('li a.up').removeClass("up").addClass("down");
+      var note = $('<div/>', {'class': 'field-note'}).html("Links expired.");
+      var refresh = $('<a/>', {href: window.location.toString()}).html("Refresh to get fresh links");
+      note.append(refresh);
+      dl.parents("div.field-value").append(note);
+    }, 60 * 10 * 1000);
+  }
 });
 

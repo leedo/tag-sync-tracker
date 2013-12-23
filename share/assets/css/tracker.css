@@ -410,9 +410,10 @@ ul#streamer-tracks {
   padding: 0;
   max-height: 100px;
   overflow: auto;
-  background: #ccc;
-  box-shadow: inset 0px 1px 3px rgba(0,0,0,0.5);
-  margin-top: 5px;
+  background: #333;
+  border: 2px solid #000;
+  border-top: none;
+  margin-top: 0px;
 }
 #streamer {
   width: 400px;
@@ -423,7 +424,7 @@ ul#streamer-tracks a.audio {
   border-top: none;
   padding: 2px 4px;
   font-size: 11px;
-  color: #333;
+  color: #ddd;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
 }
@@ -431,13 +432,12 @@ ul#streamer-tracks li:last-child a.audio {
   border-bottom: none;
 }
 ul#streamer-tracks a.audio:hover {
-  color: #000;
+  color: #fff;
 }
 ul#streamer-tracks a.audio.selected {
   background: #fff;
   color: #000;
   border-color: #ccc;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
 }
 ul#streamer-tracks li:first-child a.audio {
   border-top: 1px solid transparent;
