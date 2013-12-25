@@ -4,6 +4,7 @@ use parent "Plack::Component";
 
 use Plack::Util::Accessor qw{db auth};
 use TagSync::Web;
+use Encode;
 use TagSync::Tracker::Request;
 use Digest::SHA1 qw{sha1_hex};
 use Digest::HMAC_SHA1 qw{hmac_sha1_hex};
@@ -111,8 +112,12 @@ post '/upload' => sub {
   my $p = $req->parameters;
   my $upload_id;
 
-  foreach (qw{hash sig tags title artist size quality info filename streaming}) {
+  for (qw{hash sig tags title artist size quality info filename streaming}) {
     die "$_ is required" unless defined $p->{$_} and $p->{$_} ne "";
+  }
+
+  for (qw{artist info filename title}) {
+    $p->{$_} = decode "utf8", $p->{$_};
   }
 
   $self->db->txn(sub {
@@ -196,7 +201,7 @@ get qr{/upload/([^/]+)/servers} => sub {
       time => time,
       size => $upload->{size},
       filename => $filename,
-    }; 
+    };
 
     my $sign = sub {
       my $row = shift;

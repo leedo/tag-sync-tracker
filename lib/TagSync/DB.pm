@@ -9,6 +9,7 @@ sub new {
   my $conn = DBIx::Connector->new($dsn, $user, $pass, {
     RaiseError => 1,
     AutoCommit => 1,
+    sqlite_unicode => 1,
   });
   $conn->mode("fixup");
   return $conn;
