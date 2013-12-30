@@ -188,7 +188,7 @@ tracker.setup_events = function(root) {
     var data = new FormData(this)
       , xhr = new XMLHttpRequest()
       , prog = form.find('.progress-container')
-      , bar = form.find('.progress-bar')
+      , bar = form.find('progress')
       , submit = form.find('#upload-submit')
       , abort = form.find('.progress-abort')
       , status = form.find('.status');
@@ -210,7 +210,7 @@ tracker.setup_events = function(root) {
 
     xhr.upload.addEventListener("progress", function(e) {
       var progress = parseInt((e.loaded / e.total) * 100);
-      bar.css({width: progress + "%"});
+      bar.attr("value", progress).html(progress + "%");
     }, false);
 
     xhr.addEventListener("load", function(e) {

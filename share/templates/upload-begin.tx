@@ -45,7 +45,7 @@ will work with other archive formats.</p>
   <div class="field-value">
     <input id="upload-submit" type="submit" value="Upload to selected server">
     <div class="progress-container">
-      <div class="progress-bar"></div>
+      <progress value="0" max="100">0%</progress>
       <button class="progress-abort">Abort</button>
     </div>
     <span class="status"></span>
