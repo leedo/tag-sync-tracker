@@ -280,14 +280,8 @@ tracker.setup_events = function(root) {
         res.servers.sort(function(){return Math.round(Math.random()) - 0.5;});
         $(res.servers).each(function(i, server) {
           var url = server.url + "/download/" + hash + "?token=" + server.token
-            , ajax = url
             , last = res.servers.length == i + 1
             , link = $('<a/>',{href: url, target: "_blank"}).html(server.name);
-
-          if (stream)
-            ajax = ajax.replace("/download/", "/streamer/");
-          else
-            ajax += "&exists=true";
 
           link.attr('data-server-id', server.id);
           link.attr('data-upload-id', id);
@@ -296,16 +290,15 @@ tracker.setup_events = function(root) {
 
           $.ajax({
             type: "GET",
-            url: ajax,
+            url: url + "&exists=true",
             dataType: "json",
             success: function(res) {
               link.addClass(res.success ? "up" : "down");
               if (res.success && stream) {
-                streamers.push(res.tracks);
+                streamers.push(url.replace("/download/", "/streamer/"));
               }
               if (last && stream && streamers.length) {
-                streamers.sort(function(){return Math.round(Math.random()) - 0.5;});
-                tracker.setup_player(streamers[0]);
+                tracker.init_player(streamers);
               }
             }
           });
@@ -325,7 +318,24 @@ tracker.setup_events = function(root) {
       data: {server: server}
     });
   });
-}
+};
+
+tracker.init_player = function(urls) {
+  var done = false;
+  urls.sort(function(){return Math.round(Math.random()) - 0.5;});
+  $(urls).each(function(i, url) {
+    $.ajax({
+      url: url,
+      dataType: "json",
+      success: function(res) {
+        if (!done && res.success) {
+          done = true;
+          tracker.setup_player(res.tracks);
+        }
+      }
+    });
+  });
+};
 
 tracker.setup_player = function(tracks) {
   var list = $('#streamer-tracks');
