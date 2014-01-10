@@ -343,6 +343,18 @@ h2 {
   margin-bottom: 10px;
   border-bottom: 3px solid #eee;
 }
+ul.upload-controls {
+  float: right;
+  font-size: 12px;
+  font-weight: normal;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 0px 0;
+}
+ul.upload-controls li {
+  float: right;
+  margin-left: 5px;
+}
 h3 {
   border-bottom: 1px solid #eee;
   margin-bottom: 10px;

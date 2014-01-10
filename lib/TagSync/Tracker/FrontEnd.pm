@@ -122,6 +122,18 @@ get "/my-servers" => sub {
   $self->render('my-servers', {servers => \@servers});
 };
 
+get qr{/upload/(\d+)/edit} => sub {
+  my ($self, $req, $upload_id) = @_;
+
+  my $upload = $self->db->run(sub {
+    $_->selectrow_hashref(q{
+      SELECT * FROM upload WHERE id=?
+    }, undef, $upload_id);
+  });
+
+  $self->render('upload-edit', {upload => $upload});
+};
+
 get qr{/upload/(\d+)(/embed)?} => sub {
   my ($self, $req, $upload_id, $embed) = @_;
 

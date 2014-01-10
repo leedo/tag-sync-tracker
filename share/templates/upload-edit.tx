@@ -1,0 +1,70 @@
+: cascade common
+: override body -> {
+<h2><: $upload.artist :> &ndash; <: $upload.title :></h2>
+
+<form action="/tracker/api/upload/<: $upload.id :>" method="post" id="upload-edit">
+
+<div class="field">
+  <div class="field-label">
+    <label for="artist">Artist</label>
+  </div>
+  <div class="field-value artist">
+    <input type="text" name="artist" id="artist" value="<: $upload.artist :>">
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    <label for="title">Album</label>
+  </div>
+  <div class="field-value">
+    <input type="text" name="title" id="title" value="<: $upload.title :>">
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    <label for="quality">Quality</label>
+  </div>
+  <div class="field-value">
+    <select name="quality" id="quality">
+      <option<: $upload.quality == "MP3" ? " selected" : "" :> value="MP3">MP3</option>
+      <option<: $upload.quality == "MP3 V0" ? " selected" : "" :> value="MP3 V0">MP3 V0</option>
+      <option<: $upload.quality == "MP3 V2" ? " selected" : "" :> value="MP3 V2">MP3 V2</option>
+      <option<: $upload.quality == "MP3 320" ? " selected" : "" :> value="MP3 320">MP3 320</option>
+      <option<: $upload.quality == "AAC" ? " selected" : "" :> value="AAC">AAC</option>
+      <option<: $upload.quality == "OGG" ? " selected" : "" :> value="OGG">OGG</option>
+      <option<: $upload.quality == "FLAC" ? " selected" : "" :> value="FLAC">FLAC</option>
+    </select>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    <label for="image_url">Image URL</label>
+  </div>
+  <div class="field-value">
+    <input type="text" name="image_url" id="image_url" value="<: $upload.image_url :>">
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-label">
+    <label for="info">Info</label>
+  </div>
+  <div class="field-value">
+    <textarea name="info" id="info"><: $upload.info :></textarea>
+    <p class="field-note">Some HTML allowed. Newlines converted to &lt;br&gt;.</p>
+  </div>
+</div>
+
+<div class="field">
+  <div class="field-value">
+    <input type="submit" value="Edit upload">
+    <a href="/tracker/upload/<: $upload.id :>">Cancel</a>
+    <span class="status"></span>
+  </div>
+</div>
+
+</form>
+: }

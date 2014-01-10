@@ -105,6 +105,29 @@ del qr{/upload/(\d+)/tag/([^/]+)} => sub {
   api_response_ok;
 };
 
+post qr{/upload/(\d+)} => sub {
+  my ($self, $req, $upload_id) = @_;
+
+  die unless $req->type eq "user";
+  my $p = $req->parameters;
+
+  for (qw{title artist quality info}) {
+    die "$_ is required" unless defined $p->{$_} and $p->{$_} ne "";
+  }
+
+  for (qw{artist info filename title}) {
+    $p->{$_} = decode "utf8", $p->{$_};
+  }
+
+  $self->db->run(sub {
+    $_->do(q{
+      UPDATE upload SET title=?, artist=?, quality=?, info=?, image_url=? WHERE id=?
+    }, undef, @{$p}{qw{title artist quality info image_url}}, $upload_id);
+  });
+
+  api_response {upload => $upload_id};
+};
+
 post '/upload' => sub {
   my ($self, $req) = @_;
 

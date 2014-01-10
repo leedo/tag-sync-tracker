@@ -75,7 +75,7 @@ tracker.setup_events = function(root) {
     tracker.form_api_request($(this));
   });
 
-  root.find('#upload-complete').on('submit', function(e) {
+  root.find('#upload-complete,#upload-edit').on('submit', function(e) {
     e.preventDefault();
     tracker.form_api_request($(this), function(res) {
       window.location = "/tracker/upload/" + res.upload + "?complete";

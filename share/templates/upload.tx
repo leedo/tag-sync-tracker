@@ -10,7 +10,13 @@
 : }
 
 : if !$embed {
-<h2><: $upload.artist :> &ndash; <: $upload.title :></h2>
+<h2><: $upload.artist :> &ndash; <: $upload.title :>
+: if $user_id == $upload.user_id {
+<ul class="upload-controls">
+  <li><a href="/tracker/upload/<: $upload.id :>/edit" target="_top">Edit</a></li>
+</ul>
+: }
+</h2>
 : }
 
 <div>
