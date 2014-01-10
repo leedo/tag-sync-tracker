@@ -139,8 +139,8 @@ get qr{/upload/(\d+)/edit} => sub {
 
   my $upload = $self->db->run(sub {
     $_->selectrow_hashref(q{
-      SELECT * FROM upload WHERE id=?
-    }, undef, $upload_id);
+      SELECT * FROM upload WHERE id=? AND user_id=?
+    }, undef, $upload_id, $req->id);
   });
 
   $self->render('upload-edit', {upload => $upload});
