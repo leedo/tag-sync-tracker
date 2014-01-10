@@ -72,10 +72,13 @@ tracker.form_api_request = function(form, success) {
 tracker.setup_events = function(root) {
   root.find('form.api-form').on('submit', function(e) {
     e.preventDefault();
-    tracker.form_api_request($(this));
+    var redir = $(this).attr('data-return');
+    tracker.form_api_request($(this), function(res) {
+      if (redir) window.location = redir;
+    });
   });
 
-  root.find('#upload-complete,#upload-edit').on('submit', function(e) {
+  root.find('#upload-complete').on('submit', function(e) {
     e.preventDefault();
     tracker.form_api_request($(this), function(res) {
       window.location = "/tracker/upload/" + res.upload + "?complete";

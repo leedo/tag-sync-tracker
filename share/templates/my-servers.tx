@@ -114,6 +114,8 @@
       </td>
 
       <td class="actions" style="width:80px">
+        <a href="/tracker/server/<: $server.id :>/edit">Edit</a>
+
         <form method="DELETE" action="/tracker/api/my/server/<: $server.id :>" class="api-form confirm" data-partial="my-server-list">
           <input type="submit" value="Delete">
         </form>

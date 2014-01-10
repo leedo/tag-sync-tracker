@@ -1,0 +1,32 @@
+: cascade common
+: override body -> {
+<h2><: $server.name :></h2>
+<form action="/tracker/api/my/server/<: $server.id :>" method="POST" class="api-form" data-return="/tracker/my-servers">
+  <div class="field">
+    <div class="field-label">
+      <label for="name">Name</label>
+    </div>
+    <div class="field-value">
+      <input type="text" name="name" id="name" value="<: $server.name :>"> 
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">
+      <label for="url">URL</label>
+    </div>
+    <div class="field-value">
+      <input type="text" name="url" id="url" value="<: $server.url :>">
+      <p class="field-note">e.g. http://127.0.0.1:5001</p>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-value">
+      <input type="submit" value="Edit">
+      <a href="/tracker/my-servers">Cancel</a>
+      <span class="status"></span>
+    </div>
+  </div>
+</form>
+: }

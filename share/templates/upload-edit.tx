@@ -2,7 +2,7 @@
 : override body -> {
 <h2><: $upload.artist :> &ndash; <: $upload.title :></h2>
 
-<form action="/tracker/api/upload/<: $upload.id :>" method="post" id="upload-edit">
+<form action="/tracker/api/upload/<: $upload.id :>" method="post" class="api-form" data-return="/tracker/upload/<: $upload.id :>">
 
 <div class="field">
   <div class="field-label">

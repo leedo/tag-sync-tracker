@@ -88,6 +88,18 @@ get "/upload" => sub {
   $self->render('upload-complete', $data);
 };
 
+get qr{/server/(\d+)/edit} => sub {
+  my ($self, $req, $server_id) = @_;
+
+  my $server = $self->db->run(sub {
+    $_->selectrow_hashref(q{
+      SELECT * FROM server WHERE id=? AND user_id=?
+    }, undef, $server_id, $req->id);
+  });
+
+  $self->render('server-edit', {server => $server});
+};
+
 get "/my-servers" => sub {
   my ($self, $req) = @_;
   my @servers;
