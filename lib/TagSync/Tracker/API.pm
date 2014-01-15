@@ -142,6 +142,7 @@ del qr{/upload/(\d+)} => sub {
 
     $_->do(q{DELETE FROM upload WHERE id=?}, undef, $upload_id);
     $_->do(q{DELETE FROM upload_tag WHERE upload_id=?}, undef, $upload_id);
+    $_->do(q{DELETE FROM upload_fetch WHERE upload_id=?}, undef, $upload_id);
   });
 
   api_response_ok;
