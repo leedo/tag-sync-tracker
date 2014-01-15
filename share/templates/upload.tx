@@ -14,6 +14,11 @@
 : if $user_id == $upload.user_id {
 <ul class="upload-controls">
   <li><a href="/tracker/upload/<: $upload.id :>/edit" target="_top">Edit</a></li>
+  <li>
+    <form method="DELETE" action="/tracker/api/upload/<: $upload.id :>" class="api-form" data-return="/tracker/uploads">
+      <input type="submit" value="Delete">
+    </form>
+  </li>
 </ul>
 : }
 </h2>

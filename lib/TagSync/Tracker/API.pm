@@ -128,6 +128,25 @@ post qr{/upload/(\d+)} => sub {
   api_response {upload => $upload_id};
 };
 
+del qr{/upload/(\d+)} => sub {
+  my ($self, $req, $upload_id) = @_;
+
+  die unless $req->type eq "user";
+
+  $self->db->txn(sub {
+    my ($count) = $_->selectrow_array(q{
+      SELECT COUNT(*) FROM upload WHERE id=? AND user_id=?
+    }, undef, $upload_id, $req->id);
+
+    die "unauthorized user" unless $count;
+
+    $_->do(q{DELETE FROM upload WHERE id=?}, undef, $upload_id);
+    $_->do(q{DELETE FROM upload_tag WHERE upload_id=?}, undef, $upload_id);
+  });
+
+  api_response_ok;
+};
+
 post '/upload' => sub {
   my ($self, $req) = @_;
 
