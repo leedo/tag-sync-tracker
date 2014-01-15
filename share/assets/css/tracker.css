@@ -349,11 +349,25 @@ ul.upload-controls {
   font-weight: normal;
   list-style: none;
   margin: 0;
-  padding: 8px 0 0px 0;
+  padding: 0;
+}
+ul.upload-controls li:first-child {
+  padding-right: 0;
+  border-right: 0;
 }
 ul.upload-controls li {
   float: right;
   margin-left: 5px;
+  padding-right: 5px;
+  border-right: 1px solid #eee;
+}
+ul.upload-controls li a {
+  display: block;
+  margin-top: 3px;
+}
+ul.upload-controls form input,
+ul.upload-controls form {
+  margin: 0;
 }
 h3 {
   border-bottom: 1px solid #eee;
