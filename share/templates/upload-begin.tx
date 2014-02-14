@@ -2,7 +2,7 @@
 : override body -> {
 <h2>New upload</h2>
 
-<p>Any file type will work, but zip files work with the streamer. Eventually the streamer
+<p>Any file type will work, but zip and rar files work with the streamer. Eventually the streamer
 will work with other archive formats.</p>
 
 <form id="new-upload" method="post" action="/tracker/api/upload/url" enctype="multipart/form-data">
